@@ -1,0 +1,42 @@
+From 5126cd7c6ad26e8d4cc77e5dabbfa1a774289445 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Mon, 24 Mar 2025 23:41:34 +0800
+Subject: [PATCH v4 2/3] dt-bindings: arm: rockchip: Add OneThing Edge Cube
+ series
+
+Add devicetree binding for the OneThing OEC and OEC-turbo
+
+The OneThing Edge Cube (OEC) series features the RK3566 SoC, 8GB
+eMMC storage, and supports one SATA interface, one Gigabit Ethernet
+port, and one USB 3.0 port.
+Among the lineup, the standard OEC model comes with 2GB of RAM, while
+the OEC-turbo features 4GB of RAM; The rest of the specifications are
+identical.
+
+The OneThing Edge Cube series (shipping with the vendor firmware) is
+originally designed as a PCDN (P2P Content Delivery Network) device.
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ Documentation/devicetree/bindings/arm/rockchip.yaml | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/rockchip.yaml b/Documentation/devicetree/bindings/arm/rockchip.yaml
+index ae77ded9fe47..292fa0bbec93 100644
+--- a/Documentation/devicetree/bindings/arm/rockchip.yaml
++++ b/Documentation/devicetree/bindings/arm/rockchip.yaml
+@@ -813,6 +813,11 @@ properties:
+           - const: openailab,eaidk-610
+           - const: rockchip,rk3399
+ 
++      - description: OneThing Edge Cube series
++        items:
++          - const: onething,edge-cube
++          - const: rockchip,rk3566
++
+       - description: Xunlong Orange Pi RK3399 board
+         items:
+           - const: xunlong,rk3399-orangepi
+-- 
+2.52.0
+

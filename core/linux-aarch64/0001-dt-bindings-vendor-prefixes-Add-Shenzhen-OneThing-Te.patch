@@ -1,0 +1,30 @@
+From 27e03068f0d868044f70cf1788dc8c9c7eba0b40 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Sun, 13 Jul 2025 23:33:07 +0800
+Subject: [PATCH v4 1/3] dt-bindings: vendor-prefixes: Add Shenzhen OneThing
+ Technologies Co., Ltd.
+
+OneThing is a company engaged in edge computing.
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+---
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index ee7fd3cfe203..49607cf2941e 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -1199,6 +1199,8 @@ patternProperties:
+     description: One Laptop Per Child
+   "^oneplus,.*":
+     description: OnePlus Technology (Shenzhen) Co., Ltd.
++  "^onething,.*":
++    description: Shenzhen OneThing Technologies Co., Ltd.
+   "^onie,.*":
+     description: Open Network Install Environment group
+   "^onion,.*":
+-- 
+2.52.0
+
