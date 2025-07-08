@@ -47,14 +47,14 @@ prepare() {
 
   # add upstream patch
   if [[ -f ../patch-${pkgver} ]]; then
-    git apply --whitespace=nowarn ../patch-${pkgver}
+    patch -p1 < ../patch-${pkgver}
   fi
 
   # ALARM patches
-  git apply ../0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch
-  git apply ../0002-arm64-dts-rockchip-disable-pwm0-on-rk3399-firefly.patch
-  git apply ../0003-pps-Compatibility-hack-should-be-X86-specific.patch
-  git apply ../0004-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch
+  patch -p1 < ../0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch
+  patch -p1 < ../0002-arm64-dts-rockchip-disable-pwm0-on-rk3399-firefly.patch
+  patch -p1 < ../0003-pps-Compatibility-hack-should-be-X86-specific.patch
+  patch -p1 < ../0004-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch
 
   cat "${srcdir}/config" > ./.config
 }
