@@ -1,0 +1,49 @@
+From 044c374ea532399797f0347a6842da57516f74b9 Mon Sep 17 00:00:00 2001
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
+Date: Tue, 10 Nov 2020 20:43:28 +0100
+Subject: [PATCH 5/8] arm64: dts: allwinner: h6: Add hdmi sound card
+
+H6 supports HDMI audio. Add a sound card node for it.
+
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
+index 4650a4883948..eb613206fc1c 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
+@@ -330,6 +330,21 @@ ephy_calibration: ephy-calibration@2c {
+ 			};
+ 		};
+ 
++		sound_hdmi: sound_hdmi {
++			compatible = "allwinner,sun9i-a80-hdmi-audio",
++				     "allwinner,sun50i-h6-hdmi-audio";
++			status = "disabled";
++
++			codec {
++				sound-dai = <&hdmi>;
++			};
++
++			cpu {
++				sound-dai = <&i2s1>;
++			};
++		};
++
++
+ 		timer@3009000 {
+ 			compatible = "allwinner,sun50i-h6-timer",
+ 				     "allwinner,sun8i-a23-timer";
+@@ -876,6 +891,7 @@ ohci3: usb@5311400 {
+ 		};
+ 
+ 		hdmi: hdmi@6000000 {
++			#sound-dai-cells = <0>;
+ 			compatible = "allwinner,sun50i-h6-dw-hdmi";
+ 			reg = <0x06000000 0x10000>;
+ 			reg-io-width = <1>;
+-- 
+2.53.0
+

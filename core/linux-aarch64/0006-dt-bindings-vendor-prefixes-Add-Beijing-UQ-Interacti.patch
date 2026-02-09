@@ -1,0 +1,30 @@
+From 28d21f44c5c99ec77db790c522c08ff7cbfdc8f3 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Wed, 11 Feb 2026 15:07:35 +0800
+Subject: [PATCH 6/8] dt-bindings: vendor-prefixes: Add Beijing UQ Interactive
+ Co.,Ltd.
+
+Beijing UQ Interactive is a company focused on mobile game development,
+global publishing, and blockchain-based cloud terminal services.
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index f1d1882009ba..d6c3486bbb88 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -1699,6 +1699,8 @@ patternProperties:
+     description: United Western Technologies Corp (UniWest)
+   "^upisemi,.*":
+     description: uPI Semiconductor Corp.
++  "^uqsoft,.*":
++    description: Beijing UQ Interactive Co.,Ltd. (TaiqiGame)
+   "^urt,.*":
+     description: United Radiant Technology Corporation
+   "^usi,.*":
+-- 
+2.53.0
+

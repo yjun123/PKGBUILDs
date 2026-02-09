@@ -21,6 +21,14 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '0002-arm64-dts-rockchip-disable-pwm0-on-rk3399-firefly.patch'
         '0003-pps-Compatibility-hack-should-be-X86-specific.patch'
         '0004-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch'
+	'0001-mfd-Add-support-for-AC200.patch'
+	'0002-net-phy-Add-support-for-AC200-EPHY.patch'
+	'0003-arm64-dts-allwinner-h6-Add-AC200-EPHY-related-nodes.patch'
+	'0004-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'
+	'0005-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'
+	'0006-dt-bindings-vendor-prefixes-Add-Beijing-UQ-Interacti.patch'
+	'0007-dt-bindings-arm-sunxi-Add-TaiqiCat-A01.patch'
+	'0008-arm64-dts-allwinner-h6-Add-TaiqiCat-A01-support.patch'
         'config'
         'generate_chromebook_its.sh'
         'kernel.keyblock'
@@ -32,6 +40,14 @@ md5sums=('9207ae77b0d63c22dc4646554963cfc7'
          'c064a0a49f4ed7d487d482ca73c75178'
          '416b7c6ef37cc0edb6cb67cf618360f5'
          'e3252a71f1f38f69799b0af9ad11ab8a'
+         '353e56cfb050320b47fb2dadfc7767b1'
+         '7f690682fc9a3c2d7b0eeeff2283e1dd'
+         '725b839f7f8ee302fee2d0d0bcf220d0'
+         '751cadeb856c59afd3b5eafbff62b18d'
+         'f69a33018bd759025ded71fac6877747'
+         '3a3bf9c242643a9d04798a9ff0951388'
+         'c9766f0a7567aac8864818afe61f55e3'
+         '18a825eeba03482ac3e242ffb253c926'
          'c537dfdf59af8f66c0afc06f361e3105'
          '7c97cf141750ad810235b1ad06eb9f75'
          '61c5ff73c136ed07a7aadbf58db3d96a'
@@ -55,6 +71,16 @@ prepare() {
   patch -p1 < ../0002-arm64-dts-rockchip-disable-pwm0-on-rk3399-firefly.patch
   patch -p1 < ../0003-pps-Compatibility-hack-should-be-X86-specific.patch
   patch -p1 < ../0004-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch
+
+  # TQC A01 patches
+  patch -p1 < ../0001-mfd-Add-support-for-AC200.patch
+  patch -p1 < ../0002-net-phy-Add-support-for-AC200-EPHY.patch
+  patch -p1 < ../0003-arm64-dts-allwinner-h6-Add-AC200-EPHY-related-nodes.patch
+  patch -p1 < ../0004-ASOC-sun9i-hdmi-audio-Initial-implementation.patch
+  patch -p1 < ../0005-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch
+  patch -p1 < ../0006-dt-bindings-vendor-prefixes-Add-Beijing-UQ-Interacti.patch
+  patch -p1 < ../0007-dt-bindings-arm-sunxi-Add-TaiqiCat-A01.patch
+  patch -p1 < ../0008-arm64-dts-allwinner-h6-Add-TaiqiCat-A01-support.patch
 
   cat "${srcdir}/config" > ./.config
 }
