@@ -1,7 +1,7 @@
-From 044c374ea532399797f0347a6842da57516f74b9 Mon Sep 17 00:00:00 2001
+From 009a6feed2fb1c75270951892ccafddadab23d19 Mon Sep 17 00:00:00 2001
 From: Jernej Skrabec <jernej.skrabec@gmail.com>
 Date: Tue, 10 Nov 2020 20:43:28 +0100
-Subject: [PATCH 5/8] arm64: dts: allwinner: h6: Add hdmi sound card
+Subject: [PATCH 05/11] arm64: dts: allwinner: h6: Add hdmi sound card
 
 H6 supports HDMI audio. Add a sound card node for it.
 

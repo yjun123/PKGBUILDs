@@ -1,0 +1,43 @@
+From 948e62f1f38c2a5ee4b384d11f5086e3e2602e61 Mon Sep 17 00:00:00 2001
+From: Samuel Holland <samuel@sholland.org>
+Date: Sun, 3 Jan 2021 04:00:07 -0600
+Subject: [PATCH 09/11] arm64: dts: allwinner: h6: Use RSB for AXP805 PMIC
+ connection for TaiqiCat A01
+
+On boards where the only peripheral connected to PL0/PL1 is an X-Powers
+PMIC, configure the connection to use the RSB bus rather than the I2C
+bus. Compared to the I2C controller that shares the pins, the RSB
+controller allows a higher bus frequency, and it is more CPU-efficient.
+
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://lore.kernel.org/r/20210103100007.32867-5-samuel@sholland.org
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
+index 2a685eba08f2..28d732b7769a 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
+@@ -173,12 +173,12 @@ &pio {
+ 	vcc-pg-supply = <&reg_bldo3>;
+ };
+ 
+-&r_i2c {
++&r_rsb {
+ 	status = "okay";
+ 
+-	axp805: pmic@36 {
++	axp805: pmic@745 {
+ 		compatible = "x-powers,axp805", "x-powers,axp806";
+-		reg = <0x36>;
++		reg = <0x745>;
+ 		interrupt-parent = <&r_intc>;
+ 		interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_LOW>;
+ 		interrupt-controller;
+-- 
+2.53.0
+

@@ -1,0 +1,44 @@
+From 6193e6a1902fbf9505214f5202bb4c5245e30273 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Tue, 24 Feb 2026 14:38:35 +0800
+Subject: [PATCH 11/11] arm64: dts: allwinner: h6: Enable hdmi sound card on
+ TaqiCat A01
+
+TaiqiCat A01 board that has HDMI connector can also transmit audio
+through it.
+Enable HDMI sound card on TaiqiCat A01.
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
+index 8c5eda4219ad..e53bdd3d390f 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
+@@ -141,6 +141,10 @@ hdmi_out_con: endpoint {
+ 	};
+ };
+ 
++&i2s1 {
++	status = "okay";
++};
++
+ &i2c3 {
+ 	status = "okay";
+ };
+@@ -347,6 +351,10 @@ &rtc {
+ 	clocks = <&ext_osc32k>;
+ };
+ 
++&sound_hdmi {
++	status = "okay";
++};
++
+ &spdif {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&spdif_tx_pin>;
+-- 
+2.53.0
+

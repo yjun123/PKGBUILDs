@@ -1,7 +1,7 @@
-From a753b30f4f76de37708e7707db84ee4313b5bb3c Mon Sep 17 00:00:00 2001
+From 88b1d25f96f479272dd49016c510f033d6f6bdd1 Mon Sep 17 00:00:00 2001
 From: Jernej Skrabec <jernej.skrabec@siol.net>
 Date: Thu, 16 Apr 2020 20:57:57 +0200
-Subject: [PATCH 3/8] arm64: dts: allwinner: h6: Add AC200 EPHY related nodes
+Subject: [PATCH 03/11] arm64: dts: allwinner: h6: Add AC200 EPHY related nodes
 
 Allwinner H6 contains copackaged AC200 multi functional IC which takes
 care for analog audio, CVBS output, (another) RTC and Ethernet PHY.

@@ -1,7 +1,7 @@
-From 221f8143886146e55c65368925df4fb56729227d Mon Sep 17 00:00:00 2001
+From b153e38ca561ee5b8b7c121221eef305e544fe27 Mon Sep 17 00:00:00 2001
 From: Jernej Skrabec <jernej.skrabec@siol.net>
 Date: Thu, 16 Apr 2020 20:57:56 +0200
-Subject: [PATCH 2/8] net: phy: Add support for AC200 EPHY
+Subject: [PATCH 02/11] net: phy: Add support for AC200 EPHY
 
 AC200 MFD IC supports Fast Ethernet PHY. Add a driver for it.
 

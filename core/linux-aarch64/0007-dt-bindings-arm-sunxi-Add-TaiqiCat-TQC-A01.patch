@@ -1,13 +1,16 @@
-From 322771a546d2928295b09ff6ea11f37f67a26de8 Mon Sep 17 00:00:00 2001
+From d7894e1192e2ed5f5a51b8d20bb6067ed5501477 Mon Sep 17 00:00:00 2001
 From: Jun Yan <jerrysteve1101@gmail.com>
 Date: Wed, 11 Feb 2026 15:15:07 +0800
-Subject: [PATCH 7/8] dt-bindings: arm: sunxi: Add TaiqiCat A01
+Subject: [PATCH 07/11] dt-bindings: arm: sunxi: Add TaiqiCat (TQC) A01
 
-TaiqiCat A01 is a set-top box powered by an Allwinner H6 SoC,
-equipped with an AXP305 PMIC, 1GB RAM, 8GB eMMC, an AP6212
-WiFi module, one 100M Ethernet port, one USB 3.0 port, one
-USB 2.0 port, one Micro USB port, HDMI, SPDIF, Micro-SD, and
+TaiqiCat (TQC) A01 is a set-top box powered by an Allwinner H6 SoC,
+equipped with an AXP305 PMIC, 1GB LPDDR3 RAM, 8GB eMMC, an AP6212
+WiFi/BT combo module, one 100M Ethernet port, one USB 3.0 Type-A port,
+one USB 2.0 Type-A port, one Micro USB port, HDMI, SPDIF, Micro-SD, and
 infrared input.
+
+It was released by UQsoft as a blockchain-based terminal and is
+now discontinued and no longer supported.
 
   https://web.archive.org/web/20190409213228/https://tq.ultrapower.com.cn/product.html
 
