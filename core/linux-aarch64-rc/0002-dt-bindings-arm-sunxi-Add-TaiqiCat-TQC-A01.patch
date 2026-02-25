@@ -1,0 +1,51 @@
+From 27660dd69dc14c623e1252da1d03fc30de534c15 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Wed, 11 Feb 2026 15:15:07 +0800
+Subject: [PATCH v3 2/3] dt-bindings: arm: sunxi: Add TaiqiCat (TQC) A01
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+TaiqiCat (TQC) A01 is a set-top box powered by an Allwinner H6 SoC,
+equipped with an AXP305 PMIC, 1GB LPDDR3 RAM, 8GB eMMC, an AP6212
+WiFi/BT combo module, one 100M Ethernet port, one USB 3.0 Type-A port,
+one USB 2.0 Type-A port, one Micro USB port, HDMI, SPDIF, Micro-SD, and
+infrared input.
+
+It is a blockchain-based terminal product launched by UQSoft
+(Beijing UQSoft Interactive Technology Co., Ltd.), a wholly-owned
+subsidiary of Ultrapower. Its dedicated product homepage[1] was once
+hosted on Ultrapower’s official website[2].
+
+It should be noted that UQSoft's official website[3] is no longer
+operational, and the company appears to have been discontinued.
+
+[1] https://web.archive.org/web/20190409213228/https://tq.ultrapower.com.cn/product.html
+[2] https://www.ultrapower.com.cn
+[3] http://www.uqsoft.com
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+---
+ Documentation/devicetree/bindings/arm/sunxi.yaml | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/sunxi.yaml b/Documentation/devicetree/bindings/arm/sunxi.yaml
+index 9e4627f97d7e..e6443c266fa1 100644
+--- a/Documentation/devicetree/bindings/arm/sunxi.yaml
++++ b/Documentation/devicetree/bindings/arm/sunxi.yaml
+@@ -901,6 +901,11 @@ properties:
+           - const: allwinner,sl631
+           - const: allwinner,sun8i-v3
+ 
++      - description: TaiqiCat A01
++        items:
++          - const: ultrapower,taiqicat-a01
++          - const: allwinner,sun50i-h6
++
+       - description: Tanix TX1
+         items:
+           - const: oranth,tanix-tx1
+-- 
+2.53.0
+

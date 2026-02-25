@@ -21,6 +21,9 @@ source=("https://git.kernel.org/torvalds/t/${_srcname}.tar.gz"
         '0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch'
         '0002-arm64-dts-rockchip-disable-pwm0-on-rk3399-firefly.patch'
         '0003-pps-Compatibility-hack-should-be-X86-specific.patch'
+	'0001-dt-bindings-vendor-prefixes-Add-Beijing-Ultrapower-S.patch'
+	'0002-dt-bindings-arm-sunxi-Add-TaiqiCat-TQC-A01.patch'
+	'0003-arm64-dts-allwinner-h6-Add-TaiqiCat-TQC-A01-support.patch'
         'config'
         'generate_chromebook_its.sh'
         'kernel.keyblock'
@@ -30,6 +33,9 @@ md5sums=('707febbfb5e726c6c5f064b5fd3099f6'
          '7b08a199a97e3e2288e5c03d8e8ded2d'
          'c9d4e392555b77034e24e9f87c5ff0b3'
          'a6abfb191ecb3d7d5f6ccdaca335a11d'
+         'ce96661da6a5671d13730295c074924f'
+         '8bc8cfac136165f38fb240a8e018b12e'
+         'bb865f505b5c476f627785640e0967cd'
          'db588c413ed67fcad963059111541329'
          '7c97cf141750ad810235b1ad06eb9f75'
          '61c5ff73c136ed07a7aadbf58db3d96a'
@@ -47,6 +53,11 @@ prepare() {
   patch -p1 < ../0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch
   patch -p1 < ../0002-arm64-dts-rockchip-disable-pwm0-on-rk3399-firefly.patch
   patch -p1 < ../0003-pps-Compatibility-hack-should-be-X86-specific.patch
+
+  # TaiqiCat A01 patches
+  patch -p1 < ../0001-dt-bindings-vendor-prefixes-Add-Beijing-Ultrapower-S.patch
+  patch -p1 < ../0002-dt-bindings-arm-sunxi-Add-TaiqiCat-TQC-A01.patch
+  patch -p1 < ../0003-arm64-dts-allwinner-h6-Add-TaiqiCat-TQC-A01-support.patch
 
   cat "${srcdir}/config" > ./.config
   

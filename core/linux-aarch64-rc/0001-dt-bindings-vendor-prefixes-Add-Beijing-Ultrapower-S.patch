@@ -1,0 +1,47 @@
+From c71ba87793514ea4105e57c0945533703ba24296 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Wed, 11 Feb 2026 15:07:35 +0800
+Subject: [PATCH v3 1/3] dt-bindings: vendor-prefixes: Add Beijing Ultrapower
+ Software Co., Ltd.
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+Beijing Ultrapower Software Co., Ltd. is a company focusing on global
+mobile games, ICT services, cloud computing, and artificial intelligence
+solutions.
+
+TaiqiCat A01 is a blockchain-based terminal product launched by UQSoft
+(Beijing UQSoft Interactive Technology Co., Ltd.), a wholly-owned
+subsidiary of Ultrapower. Its dedicated product homepage[1] was once
+hosted on Ultrapower’s official website[2].
+
+It should be noted that UQSoft's official website[3] is no longer
+operational, and the company appears to have been discontinued.
+
+[1] https://web.archive.org/web/20190409213228/https://tq.ultrapower.com.cn/product.html
+[2] https://www.ultrapower.com.cn
+[3] http://www.uqsoft.com
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+---
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index ee7fd3cfe203..bb16ae90a4f6 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -1731,6 +1731,8 @@ patternProperties:
+     description: Ufi Space Co., Ltd.
+   "^ugoos,.*":
+     description: Ugoos Industrial Co., Ltd.
++  "^ultrapower,.*":
++    description: Beijing Ultrapower Software Co., Ltd.
+   "^uni-t,.*":
+     description: Uni-Trend Technology (China) Co., Ltd.
+   "^uniwest,.*":
+-- 
+2.53.0
+
