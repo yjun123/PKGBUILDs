@@ -1,7 +1,7 @@
-From 3252c3d88fb529f2936a4e0e95bdc32616b42139 Mon Sep 17 00:00:00 2001
+From c4fec930e2a877d2d9cd2d2a06808a9fa76df92d Mon Sep 17 00:00:00 2001
 From: Jernej Skrabec <jernej.skrabec@gmail.com>
 Date: Tue, 10 Nov 2020 20:42:44 +0100
-Subject: [PATCH 04/11] ASOC: sun9i-hdmi-audio: Initial implementation
+Subject: [PATCH 06/12] ASOC: sun9i-hdmi-audio: Initial implementation
 
 This implements HDMI audio sound card which is used to enable HDMI audio
 on all Allwinner SoCs with DW-HDMI core. First such SoC is A80, but it's
@@ -9,10 +9,6 @@ been used on plenty of others, like A64, A83t, H2+, H3, H5, H6, R40 and
 V40.
 
 Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-
-Port to 6.18
-
-Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
 ---
  sound/soc/sunxi/Kconfig            |   8 ++
  sound/soc/sunxi/Makefile           |   1 +

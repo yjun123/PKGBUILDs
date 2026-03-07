@@ -1,0 +1,98 @@
+From 34b783f74cdc771874c5b82fcb740bea42902a6d Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Sat, 7 Mar 2026 20:10:09 +0800
+Subject: [PATCH 11/12] arm64: dts: allwinner: h6: taiqicat: enable Ethernet
+
+TaiqiCat A01 board provide an 100MBit/s Ethernet port, which
+uses the EPHY integrated into the Allwinner H6 SoC.
+
+Enable the MAC node, plus the required AC200 nodes to allow configuring
+and enabling the integrated PHY.
+
+Signed-off-by: Jernej Skrabec <jernej.skrabec@siol.net>
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ .../dts/allwinner/sun50i-h6-taiqicat-a01.dts  | 38 +++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
+index 225f42bd3b9e..9f3a7fdd4a4a 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
+@@ -14,6 +14,7 @@ / {
+ 	compatible = "ultrapower,taiqicat-a01", "allwinner,sun50i-h6";
+ 
+ 	aliases {
++		ethernet0 = &emac;
+ 		ethernet1 = &sdio_wifi;
+ 		serial0 = &uart0;
+ 	};
+@@ -87,6 +88,16 @@ wifi_pwrseq: wifi-pwrseq {
+ 	};
+ };
+ 
++&ac200_ephy_ctl {
++       x-powers,led-polarity = <GPIO_ACTIVE_HIGH>;
++       phy-address = <1>;
++       status = "okay";
++};
++
++&ac200_pwm_clk {
++       status = "okay";
++};
++
+ &cpu0 {
+ 	cpu-supply = <&reg_dcdca>;
+ };
+@@ -107,6 +118,14 @@ &ehci3 {
+ 	status = "okay";
+ };
+ 
++&emac {
++       pinctrl-names = "default";
++       pinctrl-0 = <&ext_rmii_pins>;
++       phy-mode = "rmii";
++       phy-handle = <&ext_rmii_phy>;
++       status = "okay";
++};
++
+ &gpu {
+ 	mali-supply = <&reg_dcdcc>;
+ 	status = "okay";
+@@ -123,6 +142,21 @@ hdmi_out_con: endpoint {
+ 	};
+ };
+ 
++&i2c3 {
++       status = "okay";
++};
++
++&mdio {
++       ext_rmii_phy: ethernet-phy@1 {
++               compatible = "ethernet-phy-id0044.1400",
++                            "ethernet-phy-ieee802.3-c22";
++               reg = <1>;
++               resets = <&ac200_ephy_ctl>;
++               reset-names = "phy";
++               clocks = <&ac200_ephy_ctl>;
++       };
++};
++
+ &mmc0 {
+ 	vmmc-supply = <&reg_cldo1>;
+ 	cd-gpios = <&pio 5 6 GPIO_ACTIVE_LOW>; /* PF6 */
+@@ -295,6 +329,10 @@ sw {
+ 	};
+ };
+ 
++&pwm {
++       status = "okay";
++};
++
+ &r_ir {
+ 	status = "okay";
+ };
+-- 
+2.53.0
+

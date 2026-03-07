@@ -21,17 +21,19 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '0002-arm64-dts-rockchip-disable-pwm0-on-rk3399-firefly.patch'
         '0003-pps-Compatibility-hack-should-be-X86-specific.patch'
         '0004-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch'
-	'0001-mfd-Add-support-for-AC200.patch'
-	'0002-net-phy-Add-support-for-AC200-EPHY.patch'
-	'0003-arm64-dts-allwinner-h6-Add-AC200-EPHY-related-nodes.patch'
-	'0004-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'
-	'0005-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'
-	'0006-dt-bindings-vendor-prefixes-Add-Beijing-UQ-Interacti.patch'
-	'0007-dt-bindings-arm-sunxi-Add-TaiqiCat-TQC-A01.patch'
-	'0008-arm64-dts-allwinner-h6-Add-TaiqiCat-TQC-A01-support.patch'
-	'0009-arm64-dts-allwinner-h6-Use-RSB-for-AXP805-PMIC-conne.patch'
-	'0010-arm64-dts-allwinner-h6-taiqicat-a01-enable-Ethernet.patch'
-	'0011-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-Taq.patch'
+
+	'0001-arm64-dts-allwinner-Enforce-consistent-MMC-numbering.patch'
+	'0002-arm64-dts-sun50i-h6.dtsi-improve-thermals.patch'
+	'0003-mfd-Add-support-for-X-Powers-AC200.patch'
+	'0004-mfd-Add-support-for-X-Powers-AC200-EPHY-syscon.patch'
+	'0005-arm64-dts-allwinner-h6-Add-AC200-EPHY-nodes.patch'
+	'0006-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'
+	'0007-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'
+	'0008-dt-bindings-vendor-prefixes-Add-Beijing-Ultrapower-S.patch'
+	'0009-dt-bindings-arm-sunxi-Add-TaiqiCat-TQC-A01.patch'
+	'0010-arm64-dts-allwinner-h6-Add-TaiqiCat-TQC-A01-support.patch'
+	'0011-arm64-dts-allwinner-h6-taiqicat-enable-Ethernet.patch'
+	'0012-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boa.patch'
         'config'
         'generate_chromebook_its.sh'
         'kernel.keyblock'
@@ -43,17 +45,18 @@ md5sums=('9207ae77b0d63c22dc4646554963cfc7'
          'c064a0a49f4ed7d487d482ca73c75178'
          '416b7c6ef37cc0edb6cb67cf618360f5'
          'e3252a71f1f38f69799b0af9ad11ab8a'
-         'f4898ce1e09ab3419c48dabf7909ee62'
-         '8ecbe473c0d9ae87d9750c807ffeaea8'
-         '8e9a81d7f33161ebc57e15884c51e236'
-         '6b46e47df7754b751bf59a6846268199'
-         '8ee990190325c6e36a359df08a1b4369'
-         'ea8e7b82c30a1d202e3fd257710cc4ff'
-         '59940bc6a48557037900d04b4d9dfedf'
-         '9774a183af90c11ef11332caf026c23d'
-         '1f4a0066b0e3ceae8904ca8d9ad5f470'
-         '77d824b780c5402480d57ab16c943cea'
-         '14f256d173b70f8f6384c7d2517e67c8'
+         '4c253ca1b0a559eec90cdf598b397bd9'
+         '8d9f99bdcdf49b84d179685acd4f64a1'
+         'f62ce2cb04793b8d39cf14bec7f2f3ee'
+         '6a5216391561028eb8ad72b30b1eb0dd'
+         '85a9a7e2e68fe4abe902206a5e2982a7'
+         '3291cef7ae78cf8bd885fb020b8fe8d4'
+         'f5ab1506b6bc3751f98f161a6de81418'
+         'f90ca22d6f1158ab05a466f146bb4326'
+         '49ab2bf9798137c72781941b5d6616f1'
+         'b916bdf7f2e9c1395acd910e5e15f765'
+         '2c35f79390f034ac33c7fc2c03422d68'
+         '72bffc58e9b6c2a697f4088abdfb4b64'
          'd4333fbaecb88fd65aa0d4b7a275bb18'
          '7c97cf141750ad810235b1ad06eb9f75'
          '61c5ff73c136ed07a7aadbf58db3d96a'
@@ -78,18 +81,19 @@ prepare() {
   patch -p1 < ../0003-pps-Compatibility-hack-should-be-X86-specific.patch
   patch -p1 < ../0004-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch
 
-  # TQC A01 patches
-  patch -p1 < ../0001-mfd-Add-support-for-AC200.patch
-  patch -p1 < ../0002-net-phy-Add-support-for-AC200-EPHY.patch
-  patch -p1 < ../0003-arm64-dts-allwinner-h6-Add-AC200-EPHY-related-nodes.patch
-  patch -p1 < ../0004-ASOC-sun9i-hdmi-audio-Initial-implementation.patch
-  patch -p1 < ../0005-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch
-  patch -p1 < ../0006-dt-bindings-vendor-prefixes-Add-Beijing-UQ-Interacti.patch
-  patch -p1 < ../0007-dt-bindings-arm-sunxi-Add-TaiqiCat-TQC-A01.patch
-  patch -p1 < ../0008-arm64-dts-allwinner-h6-Add-TaiqiCat-TQC-A01-support.patch
-  patch -p1 < ../0009-arm64-dts-allwinner-h6-Use-RSB-for-AXP805-PMIC-conne.patch
-  patch -p1 < ../0010-arm64-dts-allwinner-h6-taiqicat-a01-enable-Ethernet.patch
-  patch -p1 < ../0011-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-Taq.patch
+  # TQC A01 patches from Armbian
+  patch -p1 < ../0001-arm64-dts-allwinner-Enforce-consistent-MMC-numbering.patch
+  patch -p1 < ../0002-arm64-dts-sun50i-h6.dtsi-improve-thermals.patch
+  patch -p1 < ../0003-mfd-Add-support-for-X-Powers-AC200.patch
+  patch -p1 < ../0004-mfd-Add-support-for-X-Powers-AC200-EPHY-syscon.patch
+  patch -p1 < ../0005-arm64-dts-allwinner-h6-Add-AC200-EPHY-nodes.patch
+  patch -p1 < ../0006-ASOC-sun9i-hdmi-audio-Initial-implementation.patch
+  patch -p1 < ../0007-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch
+  patch -p1 < ../0008-dt-bindings-vendor-prefixes-Add-Beijing-Ultrapower-S.patch
+  patch -p1 < ../0009-dt-bindings-arm-sunxi-Add-TaiqiCat-TQC-A01.patch
+  patch -p1 < ../0010-arm64-dts-allwinner-h6-Add-TaiqiCat-TQC-A01-support.patch
+  patch -p1 < ../0011-arm64-dts-allwinner-h6-taiqicat-enable-Ethernet.patch
+  patch -p1 < ../0012-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boa.patch
 
   cat "${srcdir}/config" > ./.config
 }
