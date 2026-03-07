@@ -4,7 +4,7 @@
 buildarch=8
 
 _rcver=7.0
-_rcrel=1
+_rcrel=2
 
 pkgbase=linux-aarch64-rc
 _srcname=linux-${_rcver}-rc${_rcrel}
@@ -29,7 +29,7 @@ source=("https://git.kernel.org/torvalds/t/${_srcname}.tar.gz"
         'kernel.keyblock'
         'kernel_data_key.vbprivk'
         'linux.preset')
-md5sums=('707febbfb5e726c6c5f064b5fd3099f6'
+md5sums=('8829c10b34621309f149460e5b352ef6'
          '7b08a199a97e3e2288e5c03d8e8ded2d'
          'c9d4e392555b77034e24e9f87c5ff0b3'
          'a6abfb191ecb3d7d5f6ccdaca335a11d'
