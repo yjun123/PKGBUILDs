@@ -1,7 +1,7 @@
-From 1c94d35b21d78534d8a2fce4dd78218bb9e8ed3a Mon Sep 17 00:00:00 2001
+From 8c2126fbbf0b316296df6369fe19c6b55c6ad3e4 Mon Sep 17 00:00:00 2001
 From: Jun Yan <jerrysteve1101@gmail.com>
-Date: Wed, 11 Feb 2026 15:07:35 +0800
-Subject: [PATCH 08/12] dt-bindings: vendor-prefixes: Add Beijing Ultrapower
+Date: Wed, 4 Mar 2026 15:34:28 +0800
+Subject: [PATCH 09/13] dt-bindings: vendor-prefixes: Add Beijing Ultrapower
  Software Co., Ltd.
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -25,6 +25,8 @@ operational, and the company appears to have been discontinued.
 
 Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260304073430.438835-2-jerrysteve1101@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 ---
  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
  1 file changed, 2 insertions(+)

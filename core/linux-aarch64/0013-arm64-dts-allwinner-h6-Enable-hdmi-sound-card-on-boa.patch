@@ -1,7 +1,7 @@
-From c67493ec62bdefb32e7f6cfd257ba086ffcc17cb Mon Sep 17 00:00:00 2001
+From 5dcc9e20238db0b7fb2a15d96c0b7b79d210a67b Mon Sep 17 00:00:00 2001
 From: =?utf-8?q?Ond=C5=99ej=20Jirman?= <megi@xff.cz>
 Date: Tue, 11 Jan 2022 13:08:47 +0100
-Subject: [PATCH 12/12] arm64: dts: allwinner: h6: Enable hdmi sound card on
+Subject: [PATCH 13/13] arm64: dts: allwinner: h6: Enable hdmi sound card on
  boards with hdmi
 
 Each board that has HDMI connector can also transmit audio through it.

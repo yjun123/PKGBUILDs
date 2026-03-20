@@ -1,7 +1,7 @@
-From 7a5fe2ba77ca372b45dc691919a23a5a771e93e3 Mon Sep 17 00:00:00 2001
+From 75941a6514cadc8c7d75258e19140f51164164ce Mon Sep 17 00:00:00 2001
 From: Jernej Skrabec <jernej.skrabec@siol.net>
 Date: Fri, 16 Aug 2019 16:40:20 +0200
-Subject: [PATCH 05/12] arm64: dts: allwinner: h6: Add AC200 EPHY nodes
+Subject: [PATCH 06/13] arm64: dts: allwinner: h6: Add AC200 EPHY nodes
 
 All Allwinner H6 SoCs feature a co-packaged AC200 die, which replaces
 the integrated PHY and audio circuitry of its H3/H5 predecessors. It is

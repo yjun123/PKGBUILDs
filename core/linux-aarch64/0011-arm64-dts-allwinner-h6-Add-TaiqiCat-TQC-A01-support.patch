@@ -1,7 +1,7 @@
-From b15f9e3f4adcace124c6adda6727c16fdf77a99a Mon Sep 17 00:00:00 2001
+From 0c5b68605979052c0f67ab69333b9b20cfc63ba9 Mon Sep 17 00:00:00 2001
 From: Jun Yan <jerrysteve1101@gmail.com>
-Date: Fri, 6 Feb 2026 13:17:58 +0800
-Subject: [PATCH 10/12] arm64: dts: allwinner: h6: Add TaiqiCat (TQC) A01
+Date: Wed, 4 Mar 2026 15:34:30 +0800
+Subject: [PATCH 11/13] arm64: dts: allwinner: h6: Add TaiqiCat (TQC) A01
  support
 
 TaiqiCat (TQC) A01 is a set-top box powered by an Allwinner H6 SoC,
@@ -46,6 +46,8 @@ Untested:
 Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
 Reviewed-by: Andre Przywara <andre.przywara@arm.com>
 Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20260304073430.438835-4-jerrysteve1101@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 ---
  arch/arm64/boot/dts/allwinner/Makefile        |   1 +
  .../dts/allwinner/sun50i-h6-taiqicat-a01.dts  | 361 ++++++++++++++++++

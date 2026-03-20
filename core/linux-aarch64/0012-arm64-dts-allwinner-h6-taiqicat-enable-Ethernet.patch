@@ -1,7 +1,7 @@
-From 34b783f74cdc771874c5b82fcb740bea42902a6d Mon Sep 17 00:00:00 2001
+From 10bdce3a0a205450eee3343d00b5a2e3d2085bfe Mon Sep 17 00:00:00 2001
 From: Jun Yan <jerrysteve1101@gmail.com>
 Date: Sat, 7 Mar 2026 20:10:09 +0800
-Subject: [PATCH 11/12] arm64: dts: allwinner: h6: taiqicat: enable Ethernet
+Subject: [PATCH 12/13] arm64: dts: allwinner: h6: taiqicat: enable Ethernet
 
 TaiqiCat A01 board provide an 100MBit/s Ethernet port, which
 uses the EPHY integrated into the Allwinner H6 SoC.

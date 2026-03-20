@@ -1,7 +1,7 @@
-From 952f3349facf18e7c6374ef666a338167f9f7687 Mon Sep 17 00:00:00 2001
+From c731c450e2db9dd53c4a0d4e429edd52ead1fd50 Mon Sep 17 00:00:00 2001
 From: Andre Przywara <andre.przywara@arm.com>
 Date: Mon, 13 Jun 2022 17:37:19 +0100
-Subject: [PATCH 04/12] mfd: Add support for X-Powers AC200 EPHY syscon
+Subject: [PATCH 05/13] mfd: Add support for X-Powers AC200 EPHY syscon
 
 The X-Powers AC200 mixed signal chip contains a 100Mbit/s Ethernet PHY.
 While the PHY is using the standard MDIO and MII/RMII interfaces to

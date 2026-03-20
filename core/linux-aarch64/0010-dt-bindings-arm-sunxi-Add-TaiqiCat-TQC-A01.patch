@@ -1,7 +1,7 @@
-From 81e02b7e1d30ca7aa40a75848fa87658b6f3e697 Mon Sep 17 00:00:00 2001
+From 7d3299211fc8510ae729515a9f6513b03e4d1a4c Mon Sep 17 00:00:00 2001
 From: Jun Yan <jerrysteve1101@gmail.com>
-Date: Wed, 11 Feb 2026 15:15:07 +0800
-Subject: [PATCH 09/12] dt-bindings: arm: sunxi: Add TaiqiCat (TQC) A01
+Date: Wed, 4 Mar 2026 15:34:29 +0800
+Subject: [PATCH 10/13] dt-bindings: arm: sunxi: Add TaiqiCat (TQC) A01
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -26,6 +26,8 @@ operational, and the company appears to have been discontinued.
 
 Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260304073430.438835-3-jerrysteve1101@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 ---
  Documentation/devicetree/bindings/arm/sunxi.yaml | 5 +++++
  1 file changed, 5 insertions(+)

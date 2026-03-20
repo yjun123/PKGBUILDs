@@ -1,7 +1,7 @@
-From c14e5fffa0f06882c842b3a009cb588114293403 Mon Sep 17 00:00:00 2001
+From 2703cd5b3d000f2b8eb10fdcc357a5cb4fb55d2a Mon Sep 17 00:00:00 2001
 From: Samuel Holland <samuel@sholland.org>
 Date: Sun, 6 Dec 2020 11:15:34 -0600
-Subject: [PATCH 01/12] arm64: dts: allwinner: Enforce consistent MMC numbering
+Subject: [PATCH 01/13] arm64: dts: allwinner: Enforce consistent MMC numbering
 
 Signed-off-by: Samuel Holland <samuel@sholland.org>
 ---
