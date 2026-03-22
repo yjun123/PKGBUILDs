@@ -8,8 +8,8 @@ pkgbase=linux-aarch64
 _srcname=linux-6.18
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
-pkgver=6.18.13
-pkgrel=3
+pkgver=6.18.19
+pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL-2.0-only')
@@ -41,24 +41,24 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         'kernel_data_key.vbprivk'
         'linux.preset')
 md5sums=('9207ae77b0d63c22dc4646554963cfc7'
-         '1ca19f2fa78c788a5bc8b8a247ed9c56'
+         '1cd9b19a23954e45f3b8af3769784983'
          '7862339da94da0b7958e61e2210760a7'
          'c064a0a49f4ed7d487d482ca73c75178'
          '416b7c6ef37cc0edb6cb67cf618360f5'
          'e3252a71f1f38f69799b0af9ad11ab8a'
          'd77a639ffb209d4fedddb0a5a25c8ca4'
          '00a1c23dddae55e6a75b958946bca27a'
-         '84b015d29bd2630e2f4f899e0107f7f3'
-         '8aa16afcd44cd0511b52dabf4b68455e'
-         'ac97ace4404d80c3edc100546abd9fdd'
-         '1c76be59328ba318374b56a801ea0fe2'
-         '5e0737dc66d4d0fe3fcdb2224ba62a32'
-         'ed7cea89ebe3d1dbe32c4cd72f61fffc'
-         '3220416c3898321f6e5f6b799cdeab9b'
-         '259754f26cfad1e598b77f9b7eeaf003'
-         'd2cf8c28419564e27b10fbbcf8aa2fec'
-         'f9c3ff0ba77a2c8575f2c7211ca14b95'
-         '19793b180c87f1562f29c14a6c50d15c'
+         '28ea631dbdd4b18cb141c5674b23e1f2'
+         '4b13c4860436a02708b5fdc578b61517'
+         '68fafa7e8b64fe6378b499f514ca43e7'
+         'f369b5a854e966f5ec6cc36d2165b836'
+         '3134c1ab0fabedc956b5b74962fff3f7'
+         'cb6c1e85c4b5c1692ce4ea90c0bd5b45'
+         '4b0fec1349caa86463df31289a8782f6'
+         'af529e5602906c187ca1731a0884fe0a'
+         '0542e93bbb16329bb1a4b8ea5762f026'
+         'e7672bea94324f424d4a291932a8b4c8'
+         '4dbd570cb2fb9d3e758d7e80dba5fde8'
          '6ce7f0bd7b0f5da534d2e14aad79ac01'
          '7c97cf141750ad810235b1ad06eb9f75'
          '61c5ff73c136ed07a7aadbf58db3d96a'
