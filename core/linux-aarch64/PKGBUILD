@@ -9,7 +9,7 @@ _srcname=linux-7.2
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
 pkgver=7.2.8
-pkgrel=1
+pkgrel=2
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL-2.0-only')
@@ -51,16 +51,16 @@ prepare() {
 
   # add upstream patch
   if [[ -f ../patch-${pkgver} ]]; then
-    git apply --whitespace=nowarn ../patch-${pkgver}
+    patch -Np1 -i ../patch-${pkgver}
   fi
 
   # ALARM patches
-  git apply ../0001-arm64-dts-rockchip-disable-pwm0-on-rk3399-firefly.patch
-  git apply ../0002-pps-Compatibility-hack-should-be-X86-specific.patch
-  git apply ../0003-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch
-  git apply ../0004-serial-amba-pl011-add-arm-pl011-axi-binding-for-RP1.patch
-  git apply ../0005-arm64-dts-rpi5-add-RP1-UART0-GPIO14-15-console.patch
-  git apply ../0006-mmc-pwrseq_simple-fix-probe-failure-when-CONFIG_RESE.patch
+  patch -Np1 -i ../0001-arm64-dts-rockchip-disable-pwm0-on-rk3399-firefly.patch
+  patch -Np1 -i ../0002-pps-Compatibility-hack-should-be-X86-specific.patch
+  patch -Np1 -i ../0003-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch
+  patch -Np1 -i ../0004-serial-amba-pl011-add-arm-pl011-axi-binding-for-RP1.patch
+  patch -Np1 -i ../0005-arm64-dts-rpi5-add-RP1-UART0-GPIO14-15-console.patch
+  patch -Np1 -i ../0006-mmc-pwrseq_simple-fix-probe-failure-when-CONFIG_RESE.patch
 
   cat "${srcdir}/config" > ./.config
 }
