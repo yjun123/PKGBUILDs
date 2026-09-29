@@ -46,6 +46,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v7.x/${_srcname}.tar.xz"
         '0021-power-supply-bq257xx-reprogram-charge-parameters-on-.patch'
         '0022-arm64-dts-rockchip-rk3568-sunniwell-z96a-pd-add-batt.patch'
         'config'
+        'sunniwell-z96a-config'
         'generate_chromebook_its.sh'
         'kernel.keyblock'
         'kernel_data_key.vbprivk'
@@ -81,6 +82,7 @@ md5sums=('b38587333374ecce1141b9b5886c4fcf'
          '899d75c9889d8d2805d35c5f67680863'
          '5939b5f96e64a0e5c6d6b7d356edae25'
          '95261d0e026bb038cb202ea009a778fa'
+         '610ac9bf4cdc97c3d7c54d714bca1cdd'
          '7c97cf141750ad810235b1ad06eb9f75'
          '61c5ff73c136ed07a7aadbf58db3d96a'
          '584777ae88bce2c5659960151b64c7d8'
@@ -129,6 +131,7 @@ prepare() {
   patch -Np1 -i ../0022-arm64-dts-rockchip-rk3568-sunniwell-z96a-pd-add-batt.patch
 
   cat "${srcdir}/config" > ./.config
+  ./scripts/kconfig/merge_config.sh -m .config ${srcdir}/sunniwell-z96a-config
 }
 
 build() {
