@@ -1,0 +1,36 @@
+From 02c3cc5e0c7367375a05a8036ad80f6a4b6fa1f7 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Tue, 29 Sep 2026 16:19:52 +0800
+Subject: [PATCH 01/14] mmc: sdhci-of-dwcmshc: downgrade HS200/HS400
+ clock-reduce message to dev_dbg
+
+dwcmshc_rk3568_set_clock() refuses to lower the bus clock below 52 MHz
+when the eMMC is in HS200/HS400 mode, since those modes require a
+minimum 52 MHz bus clock.  This is expected behaviour, but it is
+currently reported at dev_err level and therefore fires on every boot
+and on every suspend/resume cycle, cluttering the kernel log.
+
+Demote the message to dev_dbg so it stays out of the default log while
+remaining available via dynamic debug.
+
+Signed-off-by: Jun Yan <jun.yan@sunniwell.com>
+---
+ drivers/mmc/host/sdhci-of-dwcmshc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/mmc/host/sdhci-of-dwcmshc.c b/drivers/mmc/host/sdhci-of-dwcmshc.c
+index c688f3eaf468..b4fb1c1e6d99 100644
+--- a/drivers/mmc/host/sdhci-of-dwcmshc.c
++++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
+@@ -790,7 +790,7 @@ static void dwcmshc_rk3568_set_clock(struct sdhci_host *host, unsigned int clock
+ 	if (clock <= 52000000) {
+ 		if (host->mmc->ios.timing == MMC_TIMING_MMC_HS200 ||
+ 		    host->mmc->ios.timing == MMC_TIMING_MMC_HS400) {
+-			dev_err(mmc_dev(host->mmc),
++			dev_dbg(mmc_dev(host->mmc),
+ 				"Can't reduce the clock below 52MHz in HS200/HS400 mode");
+ 			goto enable_clk;
+ 		}
+-- 
+2.55.0
+

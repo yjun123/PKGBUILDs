@@ -22,7 +22,21 @@ source=("https://www.kernel.org/pub/linux/kernel/v7.x/${_srcname}.tar.xz"
         '0003-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch'
         '0004-serial-amba-pl011-add-arm-pl011-axi-binding-for-RP1.patch'
         '0005-arm64-dts-rpi5-add-RP1-UART0-GPIO14-15-console.patch'
-	'0006-mmc-pwrseq_simple-fix-probe-failure-when-CONFIG_RESE.patch'
+        '0006-mmc-pwrseq_simple-fix-probe-failure-when-CONFIG_RESE.patch'
+        '0001-mmc-sdhci-of-dwcmshc-downgrade-HS200-HS400-clock-red.patch'
+        '0002-arm64-dts-rockchip-Add-dma-names-to-RK356x-UART-node.patch'
+        '0003-dt-bindings-sound-add-Everest-ES7202.patch'
+        '0004-ASoC-codecs-add-support-for-Everest-ES7202-PDM-ADC.patch'
+        '0005-drm-bridge-analogix_dp-add-RK3568-eDP-device-type.patch'
+        '0006-drm-rockchip-analogix_dp-add-RK3568-eDP-support.patch'
+        '0007-phy-rockchip-add-RK3568-Naneng-eDP-PHY-driver.patch'
+        '0008-dt-bindings-display-rockchip-analogix-dp-add-RK3568-.patch'
+        '0009-dt-bindings-phy-rockchip-add-RK3568-Naneng-eDP-PHY.patch'
+        '0010-arm64-dts-rockchip-rk3568-add-eDP-controller-and-PHY.patch'
+        '0011-drm-panel-edp-add-BOE-NV140FHM-N43-eDP-panel.patch'
+        '0012-dt-bindings-vendor-prefixes-Add-sunniwell-prefix.patch'
+        '0013-dt-bindings-arm-rockchip-Add-Sunniwell-Z96A-Type-C-P.patch'
+        '0014-arm64-dts-rockchip-Add-Sunniwell-Z96A-PD.patch'
         'config'
         'generate_chromebook_its.sh'
         'kernel.keyblock'
@@ -35,8 +49,22 @@ md5sums=('381ae4b20294dcf4b8f63f1fd1bb7017'
          '86dc20adc64478c726a7a9f8fcf56337'
          'a9bcf91cab44e1193240a43189a9313f'
          '24c403d3738a418a67b8c0e7659380aa'
-         'd3018a1a14827b8839205d7edea39a18'
-         'df7a3c878ccdb5b23503839a2bca14e7'
+         '22a27585610f429ca92183c40c7e8b73'
+         '10b42dac330c92c5d8aca440d1874d4a'
+         '0a9092ba546d6239ad7796a6cf4d399c'
+         '89b6bb126fe68923b447af7e841906dd'
+         '10e4626799a9c5863e34c015bb15f9f7'
+         'd840129696e35800c948448189306440'
+         'f7bf21ae49172919de3b28868d0ef428'
+         '6066e6a4af649bc0b86a8c6de02e774a'
+         '739268eda91a0dc06d21e4d52f70885e'
+         '0df30eb540ec4b5aa503915fa0784f2f'
+         '8a29dd165195bdfabec264f42536de7f'
+         '7f7854d8b78c0a9d5fff6589c1acdf22'
+         'ede208d22854507518dd216972c1d1f6'
+         '963b1417d2623fcb6556260eaf5a85b7'
+         '0b055734a2e45989463e6b8fe6a86449'
+         '6181240661fb4b5db647786ed0454e51'
          '7c97cf141750ad810235b1ad06eb9f75'
          '61c5ff73c136ed07a7aadbf58db3d96a'
          '584777ae88bce2c5659960151b64c7d8'
@@ -61,6 +89,20 @@ prepare() {
   patch -Np1 -i ../0004-serial-amba-pl011-add-arm-pl011-axi-binding-for-RP1.patch
   patch -Np1 -i ../0005-arm64-dts-rpi5-add-RP1-UART0-GPIO14-15-console.patch
   patch -Np1 -i ../0006-mmc-pwrseq_simple-fix-probe-failure-when-CONFIG_RESE.patch
+  patch -Np1 -i ../0001-mmc-sdhci-of-dwcmshc-downgrade-HS200-HS400-clock-red.patch
+  patch -Np1 -i ../0002-arm64-dts-rockchip-Add-dma-names-to-RK356x-UART-node.patch
+  patch -Np1 -i ../0003-dt-bindings-sound-add-Everest-ES7202.patch
+  patch -Np1 -i ../0004-ASoC-codecs-add-support-for-Everest-ES7202-PDM-ADC.patch
+  patch -Np1 -i ../0005-drm-bridge-analogix_dp-add-RK3568-eDP-device-type.patch
+  patch -Np1 -i ../0006-drm-rockchip-analogix_dp-add-RK3568-eDP-support.patch
+  patch -Np1 -i ../0007-phy-rockchip-add-RK3568-Naneng-eDP-PHY-driver.patch
+  patch -Np1 -i ../0008-dt-bindings-display-rockchip-analogix-dp-add-RK3568-.patch
+  patch -Np1 -i ../0009-dt-bindings-phy-rockchip-add-RK3568-Naneng-eDP-PHY.patch
+  patch -Np1 -i ../0010-arm64-dts-rockchip-rk3568-add-eDP-controller-and-PHY.patch
+  patch -Np1 -i ../0011-drm-panel-edp-add-BOE-NV140FHM-N43-eDP-panel.patch
+  patch -Np1 -i ../0012-dt-bindings-vendor-prefixes-Add-sunniwell-prefix.patch
+  patch -Np1 -i ../0013-dt-bindings-arm-rockchip-Add-Sunniwell-Z96A-Type-C-P.patch
+  patch -Np1 -i ../0014-arm64-dts-rockchip-Add-Sunniwell-Z96A-PD.patch
 
   cat "${srcdir}/config" > ./.config
 }
