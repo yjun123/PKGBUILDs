@@ -1,0 +1,29 @@
+From e80c3d8fe7f200c18064c7ba2902818ecb8e154c Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Tue, 29 Sep 2026 12:05:55 +0800
+Subject: [PATCH 08/22] dt-bindings: display: rockchip: analogix-dp: add RK3568
+ eDP compatible
+
+The binding already allows either grf or hclk as the optional third
+clock, so only the RK3568 compatible string is missing.
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ .../bindings/display/rockchip/rockchip,analogix-dp.yaml          | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml b/Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml
+index 6548f157fd96..9d85cf109f6a 100644
+--- a/Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml
++++ b/Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml
+@@ -15,6 +15,7 @@ properties:
+     enum:
+       - rockchip,rk3288-dp
+       - rockchip,rk3399-edp
++      - rockchip,rk3568-edp
+       - rockchip,rk3576-edp
+       - rockchip,rk3588-edp
+ 
+-- 
+2.56.0
+
