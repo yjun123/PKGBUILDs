@@ -1,0 +1,29 @@
+From c295de57afc77aafcebedd3ac56615a9811dafc3 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Tue, 29 Sep 2026 13:30:36 +0800
+Subject: [PATCH 13/22] drm/panel-edp: add BOE NV140FHD-N43 eDP panel to EDID
+ table
+
+The BOE NV140FHD-N43 14.0" 1920x1080 eDP panel used on the Sunniwell
+Z96A identifies itself via EDID (BOE, product 0x03f4). Add it to the
+EDID table with its power sequencing delays; the mode, physical size
+and color depth all come from the EDID.
+---
+ drivers/gpu/drm/panel/panel-edp.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index ac815729aa83..ba981581f3b4 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1972,6 +1972,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0xd497, &delay_200_500_e50, "B120XAN01.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0xf390, &delay_200_500_e50, "B140XTN07.7"),
+ 
++	EDP_PANEL_ENTRY('B', 'O', 'E', 0x03f4, &delay_200_500_e50, "NV140FHD-N43"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0607, &delay_200_500_e200, "Unknown"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0608, &delay_200_500_e50, "NT116WHM-N11"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0609, &delay_200_500_e50_po2e200, "NT116WHM-N21 V4.1"),
+-- 
+2.56.0
+
