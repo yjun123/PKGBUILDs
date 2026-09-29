@@ -1,0 +1,291 @@
+From d8ae4faf5f7f5af1b8e6d90ecba0e929e4d611ba Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Thu, 8 Oct 2026 23:00:51 +0800
+Subject: [PATCH 19/22] power: supply: bq257xx: add fuel gauge driver
+
+The BQ25703A (and the register-compatible SC8886S) integrates an ADC
+that can measure the battery voltage and current. Register a fuel gauge
+power supply that converts the voltage to a state of charge using the
+OCV table of the monitored battery, compensating the IR-drop across the
+internal resistance when it is known.
+
+Add the fuel gauge as a third MFD cell of the bq257xx device so that it
+shares the parent regmap, following the same pattern as the charger and
+regulator cells.
+---
+ drivers/mfd/bq257xx.c                     |   1 +
+ drivers/power/supply/Kconfig              |  11 ++
+ drivers/power/supply/Makefile             |   1 +
+ drivers/power/supply/bq257xx_fuel_gauge.c | 214 ++++++++++++++++++++++
+ 4 files changed, 227 insertions(+)
+ create mode 100644 drivers/power/supply/bq257xx_fuel_gauge.c
+
+diff --git a/drivers/mfd/bq257xx.c b/drivers/mfd/bq257xx.c
+index 8839a4d4ea23..0026b7e514be 100644
+--- a/drivers/mfd/bq257xx.c
++++ b/drivers/mfd/bq257xx.c
+@@ -75,6 +75,7 @@ static const struct regmap_config bq25792_regmap_config = {
+ static const struct mfd_cell cells[] = {
+ 	MFD_CELL_NAME("bq257xx-regulator"),
+ 	MFD_CELL_NAME("bq257xx-charger"),
++	MFD_CELL_NAME("bq257xx-fgu"),
+ };
+ 
+ static int bq257xx_probe(struct i2c_client *client)
+diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
+index f0ede1cecb6a..8da447ba44ea 100644
+--- a/drivers/power/supply/Kconfig
++++ b/drivers/power/supply/Kconfig
+@@ -822,6 +822,17 @@ config CHARGER_BQ257XX
+ 	  Say Y to enable support for the TI BQ257XX family of battery
+ 	  charging integrated circuits.
+ 
++config FUEL_GAUGE_BQ257XX
++	tristate "TI BQ257XX battery fuel gauge"
++	depends on MFD_BQ257XX
++	help
++	  Say Y to enable support for the battery fuel gauge in the TI
++	  BQ257XX family of charging integrated circuits.
++
++	  This driver measures the battery voltage and current through the
++	  integrated ADC and reports the state of charge using the OCV
++	  table of the monitored battery.
++
+ config CHARGER_BQ25890
+ 	tristate "TI BQ25890 battery charger driver"
+ 	depends on I2C
+diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefile
+index 31fe4a145929..9cdd47ca27a4 100644
+--- a/drivers/power/supply/Makefile
++++ b/drivers/power/supply/Makefile
+@@ -103,6 +103,7 @@ obj-$(CONFIG_CHARGER_BQ24257)	+= bq24257_charger.o
+ obj-$(CONFIG_CHARGER_BQ24735)	+= bq24735-charger.o
+ obj-$(CONFIG_CHARGER_BQ2515X)	+= bq2515x_charger.o
+ obj-$(CONFIG_CHARGER_BQ257XX)	+= bq257xx_charger.o
++obj-$(CONFIG_FUEL_GAUGE_BQ257XX)	+= bq257xx_fuel_gauge.o
+ obj-$(CONFIG_CHARGER_BQ25890)	+= bq25890_charger.o
+ obj-$(CONFIG_CHARGER_BQ25980)	+= bq25980_charger.o
+ obj-$(CONFIG_CHARGER_BQ256XX)	+= bq256xx_charger.o
+diff --git a/drivers/power/supply/bq257xx_fuel_gauge.c b/drivers/power/supply/bq257xx_fuel_gauge.c
+new file mode 100644
+index 000000000000..dbdf23d26d1c
+--- /dev/null
++++ b/drivers/power/supply/bq257xx_fuel_gauge.c
+@@ -0,0 +1,214 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * BQ257XX Fuel Gauge Driver
++ * Copyright (C) 2026 Jun Yan <jerrysteve1101@gmail.com>
++ */
++
++#include <linux/bitfield.h>
++#include <linux/mfd/bq257xx.h>
++#include <linux/module.h>
++#include <linux/platform_device.h>
++#include <linux/power_supply.h>
++#include <linux/property.h>
++#include <linux/regmap.h>
++
++struct bq257xx_fg {
++	struct regmap *regmap;
++	struct power_supply *psy;
++	const struct power_supply_battery_ocv_table *cap_table;
++	int cap_table_len;
++	int internal_resist_uohm;
++};
++
++static int bq257xx_fg_get_voltage(struct bq257xx_fg *fg, int *val)
++{
++	unsigned int reg;
++	int ret;
++
++	ret = regmap_read(fg->regmap, BQ25703_ADCVSYSVBAT, &reg);
++	if (ret)
++		return ret;
++
++	*val = FIELD_GET(BQ25703_ADCVBAT_MASK, reg) *
++	       BQ25703_ADCVSYSVBAT_STEP + BQ25703_ADCVSYSVBAT_OFFSET_UV;
++
++	return 0;
++}
++
++static int bq257xx_fg_get_current(struct bq257xx_fg *fg, int *val)
++{
++	unsigned int reg, status;
++	int ret;
++
++	ret = regmap_read(fg->regmap, BQ25703_CHARGER_STATUS, &status);
++	if (ret)
++		return ret;
++
++	ret = regmap_read(fg->regmap, BQ25703_ADCIBAT_CHG, &reg);
++	if (ret)
++		return ret;
++
++	if (status & BQ25703_STS_AC_STAT)
++		*val = FIELD_GET(BQ25703_ADCIBAT_CHG_MASK, reg) *
++		       BQ25703_ADCIBAT_CHG_STEP_UA;
++	else
++		*val = -(FIELD_GET(BQ25703_ADCIBAT_DISCHG_MASK, reg) *
++			 BQ25703_ADCIBAT_DIS_STEP_UA);
++
++	return 0;
++}
++
++static int bq257xx_fg_get_capacity(struct bq257xx_fg *fg, int *val)
++{
++	int ocv_uv, v_uv, i_ua;
++	int ret;
++
++	ret = bq257xx_fg_get_voltage(fg, &v_uv);
++	if (ret)
++		return ret;
++
++	/*
++	 * Optionally compensate the IR-drop across the internal resistance.
++	 * The battery current is positive while charging and negative while
++	 * discharging, so the open-circuit voltage is always the terminal
++	 * voltage minus the current times the resistance.
++	 */
++	if (fg->internal_resist_uohm > 0) {
++		ret = bq257xx_fg_get_current(fg, &i_ua);
++		if (ret)
++			return ret;
++
++		ocv_uv = v_uv -
++			 (s64)i_ua * fg->internal_resist_uohm / 1000000;
++	} else {
++		ocv_uv = v_uv;
++	}
++
++	*val = power_supply_ocv2cap_simple(fg->cap_table, fg->cap_table_len,
++					   ocv_uv);
++
++	return *val < 0 ? *val : 0;
++}
++
++static int bq257xx_fg_get_status(struct bq257xx_fg *fg, int *val)
++{
++	unsigned int reg;
++	int ret;
++
++	ret = regmap_read(fg->regmap, BQ25703_CHARGER_STATUS, &reg);
++	if (ret)
++		return ret;
++
++	if (reg & BQ25703_STS_AC_STAT) {
++		if (reg & (BQ25703_STS_IN_FCHRG | BQ25703_STS_IN_PCHRG))
++			*val = POWER_SUPPLY_STATUS_CHARGING;
++		else
++			*val = POWER_SUPPLY_STATUS_NOT_CHARGING;
++	} else {
++		*val = POWER_SUPPLY_STATUS_DISCHARGING;
++	}
++
++	return 0;
++}
++
++static int bq257xx_fg_get_property(struct power_supply *psy,
++				   enum power_supply_property psp,
++				   union power_supply_propval *val)
++{
++	struct bq257xx_fg *fg = power_supply_get_drvdata(psy);
++
++	switch (psp) {
++	case POWER_SUPPLY_PROP_STATUS:
++		return bq257xx_fg_get_status(fg, &val->intval);
++	case POWER_SUPPLY_PROP_CAPACITY:
++		return bq257xx_fg_get_capacity(fg, &val->intval);
++	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
++		return bq257xx_fg_get_voltage(fg, &val->intval);
++	case POWER_SUPPLY_PROP_CURRENT_NOW:
++		return bq257xx_fg_get_current(fg, &val->intval);
++	default:
++		return -EINVAL;
++	}
++}
++
++static enum power_supply_property bq257xx_fg_props[] = {
++	POWER_SUPPLY_PROP_STATUS,
++	POWER_SUPPLY_PROP_CAPACITY,
++	POWER_SUPPLY_PROP_VOLTAGE_NOW,
++	POWER_SUPPLY_PROP_CURRENT_NOW,
++};
++
++static const struct power_supply_desc bq257xx_fg_desc = {
++	.name = "bq257xx-fgu",
++	.type = POWER_SUPPLY_TYPE_BATTERY,
++	.properties = bq257xx_fg_props,
++	.num_properties = ARRAY_SIZE(bq257xx_fg_props),
++	.get_property = bq257xx_fg_get_property,
++};
++
++static int bq257xx_fg_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct bq257xx_fg *fg;
++	struct power_supply_battery_info *info;
++	const struct power_supply_battery_ocv_table *table;
++	struct power_supply_config cfg = {};
++	int ret;
++
++	device_set_of_node_from_dev(dev, dev->parent);
++
++	fg = devm_kzalloc(dev, sizeof(*fg), GFP_KERNEL);
++	if (!fg)
++		return -ENOMEM;
++
++	fg->regmap = dev_get_regmap(dev->parent, NULL);
++	if (!fg->regmap)
++		return dev_err_probe(dev, -ENODEV, "Failed to get regmap\n");
++
++	platform_set_drvdata(pdev, fg);
++
++	cfg.drv_data = fg;
++	cfg.fwnode = dev_fwnode(dev);
++	fg->psy = devm_power_supply_register(dev, &bq257xx_fg_desc, &cfg);
++	if (IS_ERR(fg->psy))
++		return dev_err_probe(dev, PTR_ERR(fg->psy),
++				     "Failed to register power supply\n");
++
++	ret = power_supply_get_battery_info(fg->psy, &info);
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to get battery info\n");
++
++	fg->internal_resist_uohm = info->factory_internal_resistance_uohm;
++
++	/* A single OCV table is used, so a fixed temperature selects it. */
++	table = power_supply_find_ocv2cap_table(info, 20, &fg->cap_table_len);
++	if (!table) {
++		power_supply_put_battery_info(fg->psy, info);
++		return dev_err_probe(dev, -EINVAL,
++				     "Failed to find OCV capacity table\n");
++	}
++
++	fg->cap_table = devm_kmemdup_array(dev, table, fg->cap_table_len,
++					   sizeof(*table), GFP_KERNEL);
++	if (!fg->cap_table) {
++		power_supply_put_battery_info(fg->psy, info);
++		return -ENOMEM;
++	}
++
++	power_supply_put_battery_info(fg->psy, info);
++
++	return 0;
++}
++
++static struct platform_driver bq257xx_fg_driver = {
++	.driver = {
++		.name = "bq257xx-fgu",
++	},
++	.probe = bq257xx_fg_probe,
++};
++module_platform_driver(bq257xx_fg_driver);
++
++MODULE_DESCRIPTION("bq257xx fuel gauge driver");
++MODULE_AUTHOR("Jun Yan <jerrysteve1101@gmail.com>");
++MODULE_LICENSE("GPL");
++MODULE_ALIAS("platform:bq257xx-fgu");
+-- 
+2.56.0
+

@@ -1,0 +1,33 @@
+From 4c2d95eb04a8f24aba787888174a2e8f440d617e Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Thu, 24 Sep 2026 00:02:40 +0800
+Subject: [PATCH 03/22] dt-bindings: arm: rockchip: Add Sunniwell Z96A (Type-C
+ PD charging)
+
+Add compatible for the Sunniwell Z96A laptop, Type-C PD charging variant,
+based on the Rockchip RK3568 SoC.
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ Documentation/devicetree/bindings/arm/rockchip.yaml | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/rockchip.yaml b/Documentation/devicetree/bindings/arm/rockchip.yaml
+index 1a9dde18626d..3201ae9acee8 100644
+--- a/Documentation/devicetree/bindings/arm/rockchip.yaml
++++ b/Documentation/devicetree/bindings/arm/rockchip.yaml
+@@ -1252,6 +1252,11 @@ properties:
+               - rockchip,rv1126
+               - rockchip,rv1109
+ 
++      - description: Sunniwell Z96A (Type-C PD charging)
++        items:
++          - const: sunniwell,z96a-pd
++          - const: rockchip,rk3568
++
+       - description: Theobroma Systems PX30-Cobra
+         items:
+           - enum:
+-- 
+2.56.0
+

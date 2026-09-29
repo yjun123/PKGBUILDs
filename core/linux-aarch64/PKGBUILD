@@ -9,7 +9,7 @@ _srcname=linux-7.2
 _kernelname=${pkgbase#linux}
 _desc="AArch64 multi-platform"
 pkgver=7.2.9
-pkgrel=1
+pkgrel=2
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL-2.0-only')
@@ -22,7 +22,29 @@ source=("https://www.kernel.org/pub/linux/kernel/v7.x/${_srcname}.tar.xz"
         '0003-Revert-arm64-dts-rockchip-Move-rk3568-PCIe3-MSI-to-u.patch'
         '0004-serial-amba-pl011-add-arm-pl011-axi-binding-for-RP1.patch'
         '0005-arm64-dts-rpi5-add-RP1-UART0-GPIO14-15-console.patch'
-	'0006-mmc-pwrseq_simple-fix-probe-failure-when-CONFIG_RESE.patch'
+        '0006-mmc-pwrseq_simple-fix-probe-failure-when-CONFIG_RESE.patch'
+        '0001-mmc-sdhci-of-dwcmshc-downgrade-HS200-HS400-clock-red.patch'
+	'0002-dt-bindings-vendor-prefixes-Add-sunniwell-prefix.patch'
+        '0003-dt-bindings-arm-rockchip-Add-Sunniwell-Z96A-Type-C-P.patch'
+        '0004-arm64-dts-rockchip-Add-Sunniwell-Z96A-PD.patch'
+        '0005-dt-bindings-sound-add-Everest-ES7202.patch'
+        '0006-ASoC-codecs-add-support-for-Everest-ES7202-PDM-ADC.patch'
+        '0007-arm64-dts-rockchip-rk3568-sunniwell-z96a-pd-add-ES72.patch'
+        '0008-dt-bindings-display-rockchip-analogix-dp-add-RK3568-.patch'
+        '0009-dt-bindings-phy-rockchip-add-RK3568-Naneng-eDP-PHY.patch'
+        '0010-drm-bridge-analogix_dp-add-RK3568-eDP-device-type.patch'
+        '0011-drm-rockchip-analogix_dp-add-RK3568-eDP-support.patch'
+        '0012-phy-rockchip-add-RK3568-Naneng-eDP-PHY-driver.patch'
+        '0013-drm-panel-edp-add-BOE-NV140FHD-N43-eDP-panel.patch'
+        '0014-arm64-dts-rockchip-rk3568-add-eDP-controller-and-PHY.patch'
+        '0015-arm64-dts-rockchip-rk3568-sunniwell-z96a-pd-enable-e.patch'
+        '0016-dt-bindings-vendor-prefixes-Add-southchip-prefix.patch'
+        '0017-dt-bindings-mfd-bq25703a-Add-Southchip-SC8886S.patch'
+        '0018-mfd-bq257xx-Add-support-for-Southchip-SC8886S.patch'
+        '0019-power-supply-bq257xx-add-fuel-gauge-driver.patch'
+        '0020-mfd-bq257xx-add-module-aliases-for-charger-and-regul.patch'
+        '0021-power-supply-bq257xx-reprogram-charge-parameters-on-.patch'
+        '0022-arm64-dts-rockchip-rk3568-sunniwell-z96a-pd-add-batt.patch'
         'config'
         'generate_chromebook_its.sh'
         'kernel.keyblock'
@@ -35,8 +57,30 @@ md5sums=('381ae4b20294dcf4b8f63f1fd1bb7017'
          '86dc20adc64478c726a7a9f8fcf56337'
          'a9bcf91cab44e1193240a43189a9313f'
          '24c403d3738a418a67b8c0e7659380aa'
-         'd3018a1a14827b8839205d7edea39a18'
-         'df7a3c878ccdb5b23503839a2bca14e7'
+         '22a27585610f429ca92183c40c7e8b73'
+         '919b2b4f663be3ce347fd28a1f6d75d2'
+         'fc20cb0f928f54a4cfb8012bac7ad5af'
+         '4fd806aac5dc77c6fdef8028940ec9aa'
+         'c3bab28742e8a530a4808f6a03b797cc'
+         'e3f32585fa1da6f56c3ffbee3536d786'
+         '8bd8a7d0233fbd32dfcf4af41ea4e451'
+         'bdda9461892f2a4f474d4b465afde809'
+         '2a591c7b7d235f81b1b6a75029e4692f'
+         'f839af79de88f5c35dd2bf324adc44d0'
+         'c325ea63949e7c11bb9efd2340e66723'
+         'ffb0f1129ed389ad540bb586f7ec3e00'
+         '6ec333e0ed1c6c1a99418bda051a5428'
+         '1f91ac4e88c5aa0626ab28b2e526fb2a'
+         'a2fe500073837255b98d4a4b70d3607a'
+         'f8d71dd41aaee661cbf18f50faf91b28'
+         'f829a57cf1c58005547af05af85a520d'
+         'b83002278d1ca9d22b9aba2d09fecb2a'
+         'd83a11ebbec7351d959b57ca871c87b0'
+         '8d54e5b4eef9a9b804c4e0f36ad997fe'
+         'c7b8bbedd4613d1ba38409588c922a38'
+         'f88a4bb34f3a1b8eb6de0afe36f79c38'
+         'd7bd30bcd4a7d8fa95c1fb76380109f2'
+         'c3843301d1b6b40f8cf94281e4bd25e0'
          '7c97cf141750ad810235b1ad06eb9f75'
          '61c5ff73c136ed07a7aadbf58db3d96a'
          '584777ae88bce2c5659960151b64c7d8'
@@ -61,6 +105,28 @@ prepare() {
   patch -Np1 -i ../0004-serial-amba-pl011-add-arm-pl011-axi-binding-for-RP1.patch
   patch -Np1 -i ../0005-arm64-dts-rpi5-add-RP1-UART0-GPIO14-15-console.patch
   patch -Np1 -i ../0006-mmc-pwrseq_simple-fix-probe-failure-when-CONFIG_RESE.patch
+  patch -Np1 -i ../0001-mmc-sdhci-of-dwcmshc-downgrade-HS200-HS400-clock-red.patch
+  patch -Np1 -i ../0002-dt-bindings-vendor-prefixes-Add-sunniwell-prefix.patch
+  patch -Np1 -i ../0003-dt-bindings-arm-rockchip-Add-Sunniwell-Z96A-Type-C-P.patch
+  patch -Np1 -i ../0004-arm64-dts-rockchip-Add-Sunniwell-Z96A-PD.patch
+  patch -Np1 -i ../0005-dt-bindings-sound-add-Everest-ES7202.patch
+  patch -Np1 -i ../0006-ASoC-codecs-add-support-for-Everest-ES7202-PDM-ADC.patch
+  patch -Np1 -i ../0007-arm64-dts-rockchip-rk3568-sunniwell-z96a-pd-add-ES72.patch
+  patch -Np1 -i ../0008-dt-bindings-display-rockchip-analogix-dp-add-RK3568-.patch
+  patch -Np1 -i ../0009-dt-bindings-phy-rockchip-add-RK3568-Naneng-eDP-PHY.patch
+  patch -Np1 -i ../0010-drm-bridge-analogix_dp-add-RK3568-eDP-device-type.patch
+  patch -Np1 -i ../0011-drm-rockchip-analogix_dp-add-RK3568-eDP-support.patch
+  patch -Np1 -i ../0012-phy-rockchip-add-RK3568-Naneng-eDP-PHY-driver.patch
+  patch -Np1 -i ../0013-drm-panel-edp-add-BOE-NV140FHD-N43-eDP-panel.patch
+  patch -Np1 -i ../0014-arm64-dts-rockchip-rk3568-add-eDP-controller-and-PHY.patch
+  patch -Np1 -i ../0015-arm64-dts-rockchip-rk3568-sunniwell-z96a-pd-enable-e.patch
+  patch -Np1 -i ../0016-dt-bindings-vendor-prefixes-Add-southchip-prefix.patch
+  patch -Np1 -i ../0017-dt-bindings-mfd-bq25703a-Add-Southchip-SC8886S.patch
+  patch -Np1 -i ../0018-mfd-bq257xx-Add-support-for-Southchip-SC8886S.patch
+  patch -Np1 -i ../0019-power-supply-bq257xx-add-fuel-gauge-driver.patch
+  patch -Np1 -i ../0020-mfd-bq257xx-add-module-aliases-for-charger-and-regul.patch
+  patch -Np1 -i ../0021-power-supply-bq257xx-reprogram-charge-parameters-on-.patch
+  patch -Np1 -i ../0022-arm64-dts-rockchip-rk3568-sunniwell-z96a-pd-add-batt.patch
 
   cat "${srcdir}/config" > ./.config
 }

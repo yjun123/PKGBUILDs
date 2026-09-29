@@ -1,0 +1,71 @@
+From 464a65171de1d7863ce507969935a8a26ccf5608 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Sat, 10 Oct 2026 00:19:19 +0800
+Subject: [PATCH 07/22] arm64: dts: rockchip: rk3568-sunniwell-z96a-pd: add
+ ES7202 PDM audio
+
+Add the Everest ES7202 PDM microphone at I2C3 address 0x30 and the
+headset codec at 0x32, wire them to the PDM controller, and add the
+ES7202 sound card.
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ .../dts/rockchip/rk3568-sunniwell-z96a-pd.dts | 35 +++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-sunniwell-z96a-pd.dts b/arch/arm64/boot/dts/rockchip/rk3568-sunniwell-z96a-pd.dts
+index 2d02d0c9a5b8..314e7d69f408 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-sunniwell-z96a-pd.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3568-sunniwell-z96a-pd.dts
+@@ -111,6 +111,20 @@ simple-audio-card,codec {
+ 		};
+ 	};
+ 
++	es7202_sound: es7202-sound {
++		compatible = "simple-audio-card";
++		simple-audio-card,name = "ES7202";
++		simple-audio-card,format = "pdm";
++		simple-audio-card,mclk-fs = <256>;
++
++		simple-audio-card,cpu {
++			sound-dai = <&pdm>;
++		};
++		simple-audio-card,codec {
++			sound-dai = <&es7202_mic>;
++		};
++	};
++
+ 	sdio_pwrseq: sdio-pwrseq {
+ 		compatible = "mmc-pwrseq-simple";
+ 		clocks = <&rk809 1>;
+@@ -623,6 +637,27 @@ &i2s1m0_sdi0
+ 
+ &i2c3 {
+ 	status = "okay";
++
++	es7202_mic: codec@30 {
++		compatible = "everest,es7202";
++		reg = <0x30>;
++		#sound-dai-cells = <0>;
++	};
++
++	es7202_headset: codec@32 {
++		compatible = "everest,es7202";
++		reg = <0x32>;
++		#sound-dai-cells = <0>;
++	};
++};
++
++&pdm {
++	pinctrl-0 = <&pdmm0_clk1
++		     &pdmm0_sdi1
++		     &pdmm0_sdi3>;
++	/* ES7202 mic is on sdi1 (channel 0), headset on sdi3 (channel 1) */
++	rockchip,path-map = <1 3 0 2>;
++	status = "okay";
+ };
+ 
+ &pinctrl {
+-- 
+2.56.0
+
