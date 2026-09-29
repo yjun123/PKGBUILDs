@@ -1,0 +1,30 @@
+From 4a761740e771b2fd1b027af50be5e11e80ebf945 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Wed, 23 Sep 2026 23:49:11 +0800
+Subject: [PATCH 02/22] dt-bindings: vendor-prefixes: Add sunniwell prefix
+
+Add vendor prefix for Sunniwell Co., Ltd. (Beijing Zhaoge Digital
+Technology Co., Ltd.), a designer and manufacturer of smart set-top
+boxes and other terminal products.
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index ba2002969373..0f6839ee927f 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -1646,6 +1646,8 @@ patternProperties:
+     description: Shenzhen Sunchip Technology Co., Ltd
+   "^sundance,.*":
+     description: Sundance DSP Inc.
++  "^sunniwell,.*":
++    description: Sunniwell Co., Ltd.
+   "^sunplus,.*":
+     description: Sunplus Technology Co., Ltd.
+   "^SUNW,.*":
+-- 
+2.56.0
+
