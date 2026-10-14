@@ -1,0 +1,46 @@
+has_package() {
+    pacman -Qq "${1}" > /dev/null 2>&1
+}
+
+post_install() {
+    return
+
+    # Configure mkinitcpio.conf
+    if has_package "mkinitcpio" && \
+       [ -f /etc/mkinitcpio.conf ] && \
+       grep -q '^MODULES=()' /etc/mkinitcpio.conf; then
+        echo "Configuring /etc/mkinitcpio.conf..."
+        sed -i s/"^MODULES=()"/"MODULES=(rtc_rk808 rockchipdrm panel_edp pwm_bl)"/g /etc/mkinitcpio.conf
+    fi
+}
+
+post_upgrade() {
+    return
+
+    # Provide instructions about the video output kernel modules
+    if has_package "mkinitcpio" && \
+       [ -f /etc/mkinitcpio.conf ] && \
+       ! grep -q '^MODULES=(.*rockchipdrm panel_edp pwm_bl)' /etc/mkinitcpio.conf; then
+        echo "To have the boot screen visible as early as possible, please ensure that"
+        echo "'rockchipdrm panel_edp pwm_bl' are found at the end of the 'MODULES' list"
+        echo "in /etc/mkinitcpio.conf and rebuild the initcpio images.  You can do that"
+        echo "by running these two commands:"
+        echo "# sed -i 's/^MODULES=(.*)/MODULES=(rtc_rk808 rockchipdrm panel_edp pwm_bl)/g' /etc/mkinitcpio.conf"
+        echo "# mkinitcpio -P"
+
+        # Don't check for the presence of RTC module, to avoid
+        # presenting confusing instructions to the users
+        return
+    fi
+
+    # Provide instructions about the RTC kernel module
+    if has_package "mkinitcpio" && \
+       [ -f /etc/mkinitcpio.conf ] && \
+       ! grep -q '^MODULES=(.*rtc_rk808' /etc/mkinitcpio.conf; then
+        echo "To prevent journal corruption on boot, please add 'rtc_rk808' to the start"
+        echo "of the 'MODULES' list in /etc/mkinitcpio.conf and rebuild the initcpio images."
+        echo "You can do that by running these two commands:"
+        echo "# sed -i 's/^MODULES=(/MODULES=(rtc_rk808 /g' /etc/mkinitcpio.conf"
+        echo "# mkinitcpio -P"
+    fi
+}
