@@ -1,0 +1,23 @@
+# Maintainer : Jun Yan <jerrysteve1101@gmail.com>
+
+pkgname=z96a-typec-post-install
+pkgver=20$(date +%y%m%d)
+pkgrel=1
+pkgdesc="ARM platform files for Sunniwell Z96A Type-C"
+arch=('any')
+url="https://github.com/yjun123/e-waste/tree/master/sunniwell-z96a"
+license=('GPL')
+# depends=('systemd' 'alsa-ucm-conf' 'initramfs' 'sed' 'grep')
+depends=('linux-aarch64'
+	 'linux-firmware-realtek' # WiFi/BT firmware
+        )
+install=${pkgname}.install
+source=('rtw88.conf'
+	'99-sunniwell-z96a-typec-keyboard.hwdb')
+sha256sums=('100de65b28fdb1239b7fef95062bf36584ad1d85d19762cdfed2492d742a39a0'
+            'db8b296744491ba71d54b0d3ddc65a0b396520f2e41a3a2c7266aa4d20561c37')
+
+package() {
+    install -D -m 0644 "${srcdir}/rtw88.conf" -t "${pkgdir}/usr/lib/modprobe.d"
+    install -D -m 0644 "${srcdir}/99-sunniwell-z96a-typec-keyboard.hwdb" -t "${pkgdir}/usr/lib/udev/hwdb.d"
+}

@@ -1,0 +1,11 @@
+# USB Keyboard VID:0x6080 PID:0x8060
+# 1-to-1 key remapping: hardware MSC_SCAN -> Linux input key alias
+
+evdev:input:b0003v6080p8060*
+ KEYBOARD_KEY_700FA=micmute         # F2 Mic mute: KEY_REFRESH -> KEY_MICMUTE
+ KEYBOARD_KEY_700FB=rfkill            # F8 Wireless switch: KEY_CALC -> KEY_RFKILL
+ KEYBOARD_KEY_700FC=battery         # F9 Battery: KEY_UNKNOWN -> KEY_BATTERY
+ KEYBOARD_KEY_700F4=touchpad_off    # F10 Touchpad toggle: KEY_FIND -> KEY_TOUCHPAD_OFF
+ KEYBOARD_KEY_700F5=touchpad_on     # F10 Touchpad toggle: KEY_SCROLLUP -> KEY_TOUCHPAD_ON
+ KEYBOARD_KEY_700E9=switchvideomode # F11 Projector: KEY_STOPCD -> KEY_SWITCHVIDEOMODE
+
