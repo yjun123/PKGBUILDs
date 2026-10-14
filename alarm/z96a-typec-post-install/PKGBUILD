@@ -1,0 +1,63 @@
+# Maintainer : Jun Yan <jerrysteve1101@gmail.com>
+
+pkgname=z96a-typec-post-install
+pkgver=20$(date +%y%m%d)
+pkgrel=1
+pkgdesc="ARM platform files for Sunniwell Z96A Type-C"
+arch=('any')
+url="https://github.com/yjun123/e-waste/tree/master/sunniwell-z96a"
+license=('GPL')
+# depends=('systemd' 'alsa-ucm-conf' 'initramfs' 'sed' 'grep')
+depends=('linux-aarch64'
+         'linux-firmware-realtek' # WiFi/BT firmware
+         'initramfs'              # screen wakeup earlier
+         'alsa-ucm-conf'          # sound card config
+         'wireplumber'            # reads the shipped WirePlumber fragment
+         )
+install=${pkgname}.install
+source=('rtw88.conf'
+        codecs-es7202-DigitalMic.conf::'https://raw.githubusercontent.com/yjun123/alsa-ucm-conf/refs/heads/sunniwell-z96a-typec-ucm2/ucm2/codecs/es7202/DigitalMic.conf'
+        Rockchip-es7202-HiFi.conf::'https://raw.githubusercontent.com/yjun123/alsa-ucm-conf/refs/heads/sunniwell-z96a-typec-ucm2/ucm2/Rockchip/es7202/HiFi.conf'
+        Rockchip-es7202-es7202.conf::'https://raw.githubusercontent.com/yjun123/alsa-ucm-conf/refs/heads/sunniwell-z96a-typec-ucm2/ucm2/Rockchip/es7202/es7202.conf'
+        Rockchip-rk356x-hdmi-hdmi.conf::'https://raw.githubusercontent.com/yjun123/alsa-ucm-conf/refs/heads/sunniwell-z96a-typec-ucm2/ucm2/Rockchip/rk356x-hdmi/hdmi.conf'
+        Rockchip-rk356x-hdmi-HiFi.conf::'https://raw.githubusercontent.com/yjun123/alsa-ucm-conf/refs/heads/sunniwell-z96a-typec-ucm2/ucm2/Rockchip/rk356x-hdmi/HiFi.conf'
+        '40-z96a-typec.conf'
+        '99-sunniwell-z96a-typec-keyboard.hwdb'
+        'extlinux.conf'
+        '51-sunniwell-z96a-typec-speaker-default.conf'
+        )
+sha256sums=('100de65b28fdb1239b7fef95062bf36584ad1d85d19762cdfed2492d742a39a0'
+            'b8328f6863b5888aac41f1a7b4fa5a9ad89c9adf50bad5158486d8695691898c'
+            '41a4404cac48b60d45b63536f8442a52ba8886974f42ce24d090f3668ed4d840'
+            'cb54da5c9e937846d04fc92bbbba39fdc493ca4a45232c4311dd2b0e8e50e047'
+            'd6c5e64a21c6161161c9842d7e2c2ee55b131fac68f932ed12909de9092bedbf'
+            '202ad815bf1ae5fb24f4bc3d3515a0cae5566632fcd4b7e9d8d8d8c527cc0944'
+            'ec5b2a1c5713f716d31c49e1ea2fc93842345881bccb449d150b6584c41bbc2a'
+            'db8b296744491ba71d54b0d3ddc65a0b396520f2e41a3a2c7266aa4d20561c37'
+            '675484a6a82965667c258ac9a1c23a2dda9bfa60b64fabb0f72ec57d0336bffd'
+            'bb6fcefcfaf74d93a9a8ddccdbc087f5e153476617b7426a9ed269b72631e43d'
+            )
+
+package() {
+    install -D -m 0644 "${srcdir}/rtw88.conf" -t "${pkgdir}/usr/lib/modprobe.d"
+    install -D -m 0644 "${srcdir}/40-z96a-typec.conf" -t "${pkgdir}/etc/mkinitcpio.conf.d"
+    install -D -m 0644 "${srcdir}/99-sunniwell-z96a-typec-keyboard.hwdb" -t "${pkgdir}/usr/lib/udev/hwdb.d"
+    install -D -m 0644 "${srcdir}/extlinux.conf" -t "${pkgdir}/boot/extlinux"
+
+    # Install UCM2 files
+    install -d "${pkgdir}/usr/share/alsa/ucm2/conf.d/simple-card"
+    ## es7202 mic
+    install -D -m 0644 "${srcdir}/codecs-es7202-DigitalMic.conf" "${pkgdir}/usr/share/alsa/ucm2/codecs/es7202/DigitalMic.conf"
+    install -D -m 0644 "${srcdir}/Rockchip-es7202-HiFi.conf" "${pkgdir}/usr/share/alsa/ucm2/Rockchip/es7202/HiFi.conf"
+    install -D -m 0644 "${srcdir}/Rockchip-es7202-es7202.conf" "${pkgdir}/usr/share/alsa/ucm2/Rockchip/es7202/es7202.conf"
+    ln -sf ../../Rockchip/es7202/es7202.conf "${pkgdir}/usr/share/alsa/ucm2/conf.d/simple-card/es7202-mic.conf"
+    ## hdmi
+    install -D -m 0644 "${srcdir}/Rockchip-rk356x-hdmi-hdmi.conf" "${pkgdir}/usr/share/alsa/ucm2/Rockchip/rk356x-hdmi/hdmi.conf"
+    install -D -m 0644 "${srcdir}/Rockchip-rk356x-hdmi-HiFi.conf" "${pkgdir}/usr/share/alsa/ucm2/Rockchip/rk356x-hdmi/HiFi.conf"
+    ln -sf ../../Rockchip/rk356x-hdmi/hdmi.conf "${pkgdir}/usr/share/alsa/ucm2/conf.d/simple-card/HDMI.conf"
+
+    # Make the internal speaker the default audio output
+    install -D -m 0644 "${srcdir}/51-sunniwell-z96a-typec-speaker-default.conf" \
+        "${pkgdir}/usr/share/wireplumber/wireplumber.conf.d/51-sunniwell-z96a-typec-speaker-default.conf"
+
+}

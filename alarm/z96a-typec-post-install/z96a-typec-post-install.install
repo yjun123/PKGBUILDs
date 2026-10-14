@@ -1,0 +1,19 @@
+has_package() {
+    pacman -Qq "${1}" > /dev/null 2>&1
+}
+
+post_install() {
+    if has_package "mkinitcpio"; then
+        echo "Installed /etc/mkinitcpio.conf.d/40-z96a-typec.conf to early-load"
+        echo "'rtc_rk808', 'rockchipdrm', 'panel_edp' and 'phy_rockchip_naneng_edp'."
+        echo "Rebuild the initcpio images with:"
+        echo "# mkinitcpio -P"
+    fi
+}
+
+post_upgrade() {
+    if has_package "mkinitcpio"; then
+        echo "Rebuild the initcpio images to pick up the mkinitcpio drop-in:"
+        echo "# mkinitcpio -P"
+    fi
+}
