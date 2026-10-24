@@ -23,6 +23,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v7.x/${_srcname}.tar.xz"
         '0004-serial-amba-pl011-add-arm-pl011-axi-binding-for-RP1.patch'
         '0005-arm64-dts-rpi5-add-RP1-UART0-GPIO14-15-console.patch'
         '0006-mmc-pwrseq_simple-fix-probe-failure-when-CONFIG_RESE.patch'
+        '0001-dt-bindings-mfd-x-powers-Add-AC200.patch'
+        '0002-mfd-ac200-Add-X-Powers-AC200-support.patch'
+        '0003-dt-bindings-net-x-powers-add-AC200-AC300-EPHY-packag.patch'
+        '0004-net-phy-add-X-Powers-AC200-AC300-EPHY-driver.patch'
+        '0005-arm64-dts-allwinner-h6-Add-AC200-EPHY-nodes.patch'
+        '0006-arm64-dts-allwinner-h6-taiqicat-a01-enable-Ethernet.patch'
+        '0007-media-rc-add-keymap-for-TaiqiCat-TQC-A01-remote.patch'
+        '0008-arm64-dts-allwinner-h6-taiqicat-a01-add-IR-remote-ke.patch'
+        '0009-ASOC-sun9i-hdmi-audio-Initial-implementation.patch'
+        '0010-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch'
+        '0011-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-Taq.patch'
         'config'
         'generate_chromebook_its.sh'
         'kernel.keyblock'
@@ -36,7 +47,18 @@ md5sums=('381ae4b20294dcf4b8f63f1fd1bb7017'
          'a9bcf91cab44e1193240a43189a9313f'
          '24c403d3738a418a67b8c0e7659380aa'
          '22a27585610f429ca92183c40c7e8b73'
-         'cf663e64ec5f265ab09615e5f70c4e64'
+         'b6608a33f002b798efa072102f1956a8'
+         '95a940287dae2c2d8857a3ae2ee62655'
+         '681ba6a433fa972386430939a26c2067'
+         'bea0db7ac70ce8d69dc8cf3ffae8fa07'
+         '12b73272e5bf4ab59480726bb401fd2f'
+         'ff0b7c6b5141720c52f70c04a9131fba'
+         '71519d13c0a8c42a845b199e2d8eb8d2'
+         'a51fb6d9d2d4223443f2af86542df292'
+         '88c9e906eca517cb0f6a3f8712da36c7'
+         '638efb42655d1c5d3a153e0396e0e1e4'
+         '69b85ab25ef26e30c7723911d89f20d6'
+         'a6bf1509c957af0caa96e04f0b5cedad'
          '7c97cf141750ad810235b1ad06eb9f75'
          '61c5ff73c136ed07a7aadbf58db3d96a'
          '584777ae88bce2c5659960151b64c7d8'
@@ -61,6 +83,20 @@ prepare() {
   patch -Np1 -i ../0004-serial-amba-pl011-add-arm-pl011-axi-binding-for-RP1.patch
   patch -Np1 -i ../0005-arm64-dts-rpi5-add-RP1-UART0-GPIO14-15-console.patch
   patch -Np1 -i ../0006-mmc-pwrseq_simple-fix-probe-failure-when-CONFIG_RESE.patch
+
+  # TQC A01 patches
+  patch -Np1 -i ../0001-dt-bindings-mfd-x-powers-Add-AC200.patch
+  patch -Np1 -i ../0002-mfd-ac200-Add-X-Powers-AC200-support.patch
+  patch -Np1 -i ../0003-dt-bindings-net-x-powers-add-AC200-AC300-EPHY-packag.patch
+  patch -Np1 -i ../0004-net-phy-add-X-Powers-AC200-AC300-EPHY-driver.patch
+  patch -Np1 -i ../0005-arm64-dts-allwinner-h6-Add-AC200-EPHY-nodes.patch
+  patch -Np1 -i ../0006-arm64-dts-allwinner-h6-taiqicat-a01-enable-Ethernet.patch
+  patch -Np1 -i ../0007-media-rc-add-keymap-for-TaiqiCat-TQC-A01-remote.patch
+  patch -Np1 -i ../0008-arm64-dts-allwinner-h6-taiqicat-a01-add-IR-remote-ke.patch
+  patch -Np1 -i ../0009-ASOC-sun9i-hdmi-audio-Initial-implementation.patch
+  patch -Np1 -i ../0010-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch
+  patch -Np1 -i ../0011-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-Taq.patch
+
 
   cat "${srcdir}/config" > ./.config
 }

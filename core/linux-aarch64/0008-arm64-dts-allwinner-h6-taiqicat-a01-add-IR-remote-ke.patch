@@ -1,0 +1,30 @@
+From 3b2e6e19e2d8c3654a2b42a1cdcdc25d132ab4a8 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Sat, 24 Oct 2026 15:58:13 +0800
+Subject: [PATCH 08/11] arm64: dts: allwinner: h6: taiqicat-a01: add IR remote
+ keymap
+
+The board has an IR receiver wired to PL9 and the r_ir node is already
+enabled. Reference the keymap for the bundled remote so that it works
+out of the box.
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
+index 972f40ec06d6..df97a8c0eb5f 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
+@@ -334,6 +334,7 @@ sw {
+ };
+ 
+ &r_ir {
++	linux,rc-map-name = "rc-taiqicat-a01";
+ 	status = "okay";
+ };
+ 
+-- 
+2.56.0
+

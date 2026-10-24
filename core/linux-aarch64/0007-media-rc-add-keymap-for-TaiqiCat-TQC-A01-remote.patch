@@ -1,0 +1,146 @@
+From f60b665a56f86ffb30596a98b282d8ce664da787 Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Sat, 24 Oct 2026 15:58:12 +0800
+Subject: [PATCH 07/11] media: rc: add keymap for TaiqiCat (TQC) A01 remote
+
+The TaiqiCat (TQC) A01 TV box ships with an NEC extended remote using
+address 0x9f. Add a keymap covering all 48 buttons of the remote, as
+found in the vendor keylayout shipped in the stock firmware.
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ drivers/media/rc/keymaps/Makefile          |  1 +
+ drivers/media/rc/keymaps/rc-taiqicat-a01.c | 96 ++++++++++++++++++++++
+ include/media/rc-map.h                     |  1 +
+ 3 files changed, 98 insertions(+)
+ create mode 100644 drivers/media/rc/keymaps/rc-taiqicat-a01.c
+
+diff --git a/drivers/media/rc/keymaps/Makefile b/drivers/media/rc/keymaps/Makefile
+index d04572627cdd..3eba0070cd0b 100644
+--- a/drivers/media/rc/keymaps/Makefile
++++ b/drivers/media/rc/keymaps/Makefile
+@@ -110,6 +110,7 @@ obj-$(CONFIG_RC_MAP) += \
+ 			rc-snapstream-firefly.o \
+ 			rc-streamzap.o \
+ 			rc-su3000.o \
++			rc-taiqicat-a01.o \
+ 			rc-tanix-tx3mini.o \
+ 			rc-tanix-tx5max.o \
+ 			rc-tbs-nec.o \
+diff --git a/drivers/media/rc/keymaps/rc-taiqicat-a01.c b/drivers/media/rc/keymaps/rc-taiqicat-a01.c
+new file mode 100644
+index 000000000000..b885c910f0de
+--- /dev/null
++++ b/drivers/media/rc/keymaps/rc-taiqicat-a01.c
+@@ -0,0 +1,96 @@
++// SPDX-License-Identifier: GPL-2.0+
++// Copyright (c) 2026 Jun Yan <jerrysteve1101@gmail.com>
++
++#include <media/rc-map.h>
++#include <linux/module.h>
++
++/*
++ * Keymap for the TaiqiCat (TQC) A01 remote control.
++ *
++ * The remote uses extended NEC with address 0x9f and command codes as
++ * found in the vendor keylayout shipped in the stock firmware.
++ */
++
++static struct rc_map_table taiqicat_a01_table[] = {
++	{ 0x9f0057, KEY_POWER },
++	{ 0x9f004f, KEY_BACK },
++	{ 0x9f0047, KEY_HOME },
++	{ 0x9f0016, KEY_MENU },
++	{ 0x9f000d, KEY_SEARCH },
++
++	{ 0x9f0043, KEY_UP },
++	{ 0x9f000a, KEY_DOWN },
++	{ 0x9f0006, KEY_LEFT },
++	{ 0x9f000e, KEY_RIGHT },
++	{ 0x9f0002, KEY_OK },
++
++	{ 0x9f0000, KEY_VOLUMEUP },
++	{ 0x9f005d, KEY_VOLUMEDOWN },
++	{ 0x9f005c, KEY_MUTE },
++
++	{ 0x9f001a, KEY_1 },
++	{ 0x9f0001, KEY_2 },
++	{ 0x9f0045, KEY_3 },
++	{ 0x9f0059, KEY_4 },
++	{ 0x9f004d, KEY_5 },
++	{ 0x9f0040, KEY_6 },
++	{ 0x9f0052, KEY_7 },
++	{ 0x9f0053, KEY_8 },
++	{ 0x9f0041, KEY_9 },
++	{ 0x9f005a, KEY_0 },
++
++	{ 0x9f0050, KEY_PLAYPAUSE },
++	{ 0x9f0013, KEY_STOP },
++	{ 0x9f000f, KEY_PREVIOUS },
++	{ 0x9f000b, KEY_NEXT },
++	{ 0x9f0007, KEY_REWIND },
++	{ 0x9f0003, KEY_FASTFORWARD },
++
++	{ 0x9f0046, KEY_SUBTITLE },
++	{ 0x9f0044, KEY_AUDIO },
++	{ 0x9f0004, KEY_TV },
++	{ 0x9f0009, KEY_SETUP },
++	{ 0x9f0010, KEY_INFO },
++	{ 0x9f0054, KEY_VIDEO },
++	{ 0x9f005b, KEY_APPSELECT },
++	{ 0x9f0017, KEY_WWW },
++
++	{ 0x9f0055, KEY_RED },
++	{ 0x9f004e, KEY_GREEN },
++	{ 0x9f0049, KEY_YELLOW },
++	{ 0x9f0048, KEY_BLUE },
++
++	{ 0x9f0015, KEY_FAVORITES },
++	{ 0x9f0005, KEY_HELP },
++	{ 0x9f0008, KEY_MEDIA_REPEAT },
++	{ 0x9f0014, KEY_FULL_SCREEN },
++	{ 0x9f000c, KEY_ZOOMIN },
++	{ 0x9f0058, KEY_ZOOMOUT },
++	{ 0x9f0011, KEY_CONTEXT_MENU },
++};
++
++static struct rc_map_list taiqicat_a01_map = {
++	.map = {
++		.scan     = taiqicat_a01_table,
++		.size     = ARRAY_SIZE(taiqicat_a01_table),
++		.rc_proto = RC_PROTO_NECX,
++		.name     = RC_MAP_TAIQICAT_A01,
++	}
++};
++
++static int __init init_rc_map_taiqicat_a01(void)
++{
++	return rc_map_register(&taiqicat_a01_map);
++}
++
++static void __exit exit_rc_map_taiqicat_a01(void)
++{
++	rc_map_unregister(&taiqicat_a01_map);
++}
++
++module_init(init_rc_map_taiqicat_a01)
++module_exit(exit_rc_map_taiqicat_a01)
++
++MODULE_LICENSE("GPL");
++MODULE_AUTHOR("Jun Yan <jerrysteve1101@gmail.com>");
++MODULE_DESCRIPTION("TaiqiCat (TQC) A01 remote controller keytable");
+diff --git a/include/media/rc-map.h b/include/media/rc-map.h
+index d95ed3e96de2..1a21404dcf86 100644
+--- a/include/media/rc-map.h
++++ b/include/media/rc-map.h
+@@ -315,6 +315,7 @@ struct rc_map *rc_map_get(const char *name);
+ #define RC_MAP_SNAPSTREAM_FIREFLY        "rc-snapstream-firefly"
+ #define RC_MAP_STREAMZAP                 "rc-streamzap"
+ #define RC_MAP_SU3000                    "rc-su3000"
++#define RC_MAP_TAIQICAT_A01              "rc-taiqicat-a01"
+ #define RC_MAP_TANIX_TX3MINI             "rc-tanix-tx3mini"
+ #define RC_MAP_TANIX_TX5MAX              "rc-tanix-tx5max"
+ #define RC_MAP_TBS_NEC                   "rc-tbs-nec"
+-- 
+2.56.0
+

@@ -1,0 +1,105 @@
+From 76d34e3b48ac1a3fc7c73651909e59abe93ec1eb Mon Sep 17 00:00:00 2001
+From: Jun Yan <jerrysteve1101@gmail.com>
+Date: Sat, 24 Oct 2026 12:25:18 +0800
+Subject: [PATCH 06/11] arm64: dts: allwinner: h6: taiqicat-a01: enable
+ Ethernet
+
+The TaiqiCat A01 board provides a 100 Mbit/s Ethernet port, which uses the
+EPHY integrated into the co-packaged AC200 of the Allwinner H6 SoC.
+
+Enable the EMAC in RMII mode, the AC200 input clock and the i2c3 bus, and
+describe the AC200 Ethernet PHY as a package on the MDIO bus, referencing
+the AC200 MFD node for its package control registers.
+
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+---
+ .../dts/allwinner/sun50i-h6-taiqicat-a01.dts  | 38 +++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
+index 225f42bd3b9e..972f40ec06d6 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-taiqicat-a01.dts
+@@ -14,6 +14,7 @@ / {
+ 	compatible = "ultrapower,taiqicat-a01", "allwinner,sun50i-h6";
+ 
+ 	aliases {
++		ethernet0 = &emac;
+ 		ethernet1 = &sdio_wifi;
+ 		serial0 = &uart0;
+ 	};
+@@ -87,6 +88,10 @@ wifi_pwrseq: wifi-pwrseq {
+ 	};
+ };
+ 
++&ac200_pwm_clk {
++	status = "okay";
++};
++
+ &cpu0 {
+ 	cpu-supply = <&reg_dcdca>;
+ };
+@@ -107,6 +112,14 @@ &ehci3 {
+ 	status = "okay";
+ };
+ 
++&emac {
++	pinctrl-names = "default";
++	pinctrl-0 = <&ext_rmii_pins>;
++	phy-mode = "rmii";
++	phy-handle = <&ext_rmii_phy>;
++	status = "okay";
++};
++
+ &gpu {
+ 	mali-supply = <&reg_dcdcc>;
+ 	status = "okay";
+@@ -123,6 +136,10 @@ hdmi_out_con: endpoint {
+ 	};
+ };
+ 
++&i2c3 {
++	status = "okay";
++};
++
+ &mmc0 {
+ 	vmmc-supply = <&reg_cldo1>;
+ 	cd-gpios = <&pio 5 6 GPIO_ACTIVE_LOW>; /* PF6 */
+@@ -159,6 +176,23 @@ &mmc2 {
+ 	status = "okay";
+ };
+ 
++&mdio {
++	ethernet-phy-package@1 {
++		compatible = "x-powers,ac200-ephy-package";
++		reg = <1>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		vcc-supply = <&reg_aldo2>;
++		x-powers,ac200 = <&ac200>;
++		x-powers,xmii-rx-clock-inverted;
++
++		ext_rmii_phy: ethernet-phy@1 {
++			compatible = "ethernet-phy-id0044.1400";
++			reg = <1>;
++		};
++	};
++};
++
+ &ohci0 {
+ 	status = "okay";
+ };
+@@ -173,6 +207,10 @@ &pio {
+ 	vcc-pg-supply = <&reg_bldo3>;
+ };
+ 
++&pwm {
++	status = "okay";
++};
++
+ &r_i2c {
+ 	status = "okay";
+ 
+-- 
+2.56.0
+
