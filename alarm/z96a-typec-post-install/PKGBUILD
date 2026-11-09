@@ -1,7 +1,7 @@
 # Maintainer : Jun Yan <jerrysteve1101@gmail.com>
 
 pkgname=z96a-typec-post-install
-pkgver=20$(date +%y%m%d)
+pkgver=20261109
 pkgrel=1
 pkgdesc="ARM platform files for Sunniwell Z96A Type-C"
 arch=('any')
@@ -13,8 +13,12 @@ depends=('linux-aarch64'
          'initramfs'              # screen wakeup earlier
          'alsa-ucm-conf'          # sound card config
          'wireplumber'            # reads the shipped WirePlumber fragment
+         'interception-tools'     # udevmon/intercept/uinput pipeline
+         'interception-dual-function-keys' # F2 -> KEY_MICMUTE + KEY_NUMLOCK
          )
 install=${pkgname}.install
+backup=('etc/interception/udevmon.d/z96a-micmute-led.yaml'
+        'etc/interception/dual-function-keys.d/z96a-micmute-led.yaml')
 source=('rtw88.conf'
         codecs-es7202-DigitalMic.conf::'https://raw.githubusercontent.com/yjun123/alsa-ucm-conf/refs/heads/sunniwell-z96a-typec-ucm2/ucm2/codecs/es7202/DigitalMic.conf'
         Rockchip-es7202-HiFi.conf::'https://raw.githubusercontent.com/yjun123/alsa-ucm-conf/refs/heads/sunniwell-z96a-typec-ucm2/ucm2/Rockchip/es7202/HiFi.conf'
@@ -25,6 +29,8 @@ source=('rtw88.conf'
         '99-sunniwell-z96a-typec-keyboard.hwdb'
         'extlinux.conf'
         '51-sunniwell-z96a-typec-speaker-default.conf'
+        'z96a-micmute-led.udevmon.yaml'
+        'z96a-micmute-led.dfk.yaml'
         )
 sha256sums=('100de65b28fdb1239b7fef95062bf36584ad1d85d19762cdfed2492d742a39a0'
             'b8328f6863b5888aac41f1a7b4fa5a9ad89c9adf50bad5158486d8695691898c'
@@ -36,6 +42,8 @@ sha256sums=('100de65b28fdb1239b7fef95062bf36584ad1d85d19762cdfed2492d742a39a0'
             'db8b296744491ba71d54b0d3ddc65a0b396520f2e41a3a2c7266aa4d20561c37'
             '675484a6a82965667c258ac9a1c23a2dda9bfa60b64fabb0f72ec57d0336bffd'
             'bb6fcefcfaf74d93a9a8ddccdbc087f5e153476617b7426a9ed269b72631e43d'
+            '15adde6b5149c7fa301b246e69faa8636ccebc2213c8c45d990b7a9f1032db8b'
+            'd508ce41e26416e086ffe295ecae1a175ea4289057db6ec27b8c20165edb63de'
             )
 
 package() {
@@ -60,4 +68,9 @@ package() {
     install -D -m 0644 "${srcdir}/51-sunniwell-z96a-typec-speaker-default.conf" \
         "${pkgdir}/usr/share/wireplumber/wireplumber.conf.d/51-sunniwell-z96a-typec-speaker-default.conf"
 
+    # Mic-mute LED: F2 also toggles the NumLock LED it is wired to
+    install -D -m 0644 "${srcdir}/z96a-micmute-led.dfk.yaml" \
+        "${pkgdir}/etc/interception/dual-function-keys.d/z96a-micmute-led.yaml"
+    install -D -m 0644 "${srcdir}/z96a-micmute-led.udevmon.yaml" \
+        "${pkgdir}/etc/interception/udevmon.d/z96a-micmute-led.yaml"
 }

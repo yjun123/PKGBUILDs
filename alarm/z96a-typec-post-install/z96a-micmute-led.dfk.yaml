@@ -1,0 +1,13 @@
+# Emit NumLock alongside the native mic-mute key so the mic-mute LED (wired to
+# the keyboard NumLock LED) follows F2.
+#
+# TAP is empty on purpose: the HOLD combo is already sent on key press, so
+# filling TAP would emit the keys a second time on release and toggle twice.
+TIMING:
+  TAP_MILLISEC: 200
+  DOUBLE_TAP_MILLISEC: 0
+
+MAPPINGS:
+  - KEY: KEY_MICMUTE
+    TAP: []
+    HOLD: [ KEY_MICMUTE, KEY_NUMLOCK ]

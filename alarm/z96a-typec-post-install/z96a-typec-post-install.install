@@ -9,11 +9,22 @@ post_install() {
         echo "Rebuild the initcpio images with:"
         echo "# mkinitcpio -P"
     fi
+
+    if has_package "interception-tools"; then
+        echo "Enabled udevmon: F2 (mic mute) now toggles the NumLock LED the"
+        echo "mic-mute indicator is wired to. Start it without rebooting with:"
+        echo "# systemctl enable --now udevmon"
+    fi
 }
 
 post_upgrade() {
     if has_package "mkinitcpio"; then
         echo "Rebuild the initcpio images to pick up the mkinitcpio drop-in:"
         echo "# mkinitcpio -P"
+    fi
+
+    if has_package "interception-tools"; then
+        echo "Reload the mic-mute LED rule with:"
+        echo "# systemctl restart udevmon"
     fi
 }

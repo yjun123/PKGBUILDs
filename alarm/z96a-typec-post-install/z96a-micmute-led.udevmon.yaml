@@ -1,0 +1,10 @@
+# Z96A Type-C: F2 (mic mute) also toggles the NumLock LED, to which the
+# mic-mute indicator LED is wired.
+#
+# KEY_MICMUTE is remapped by dual-function-keys to emit KEY_MICMUTE (the
+# native mic mute) plus KEY_NUMLOCK; the compositor applies the NumLock LED
+# state to every keyboard device, so the physical indicator follows.
+- JOB: "intercept -g $DEVNODE | dual-function-keys -c /etc/interception/dual-function-keys.d/z96a-micmute-led.yaml | uinput -d $DEVNODE"
+  DEVICE:
+    EVENTS:
+      EV_KEY: [KEY_MICMUTE]
